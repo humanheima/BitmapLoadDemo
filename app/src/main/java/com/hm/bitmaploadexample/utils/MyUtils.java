@@ -1,4 +1,4 @@
-package com.hm.bitmaploaddemo.utils;
+package com.hm.bitmaploadexample.utils;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;

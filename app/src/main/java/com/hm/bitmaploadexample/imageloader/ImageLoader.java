@@ -1,4 +1,4 @@
-package imgloader;
+package com.hm.bitmaploadexample.imageloader;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -14,8 +14,10 @@ import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.hm.bitmaploaddemo.App;
-import com.hm.bitmaploaddemo.R;
+import com.hm.bitmaploadexample.App;
+import com.hm.bitmaploadexample.R;
+import com.hm.bitmaploadexample.libcore.io.DiskLruCache;
+import com.hm.bitmaploadexample.utils.MD5Util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,8 +28,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -35,7 +35,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import libcore.io.DiskLruCache;
 
 /**
  * Created by Administrator on 2017/1/5.
@@ -58,7 +57,9 @@ public class ImageLoader {
     private DiskLruCache mDiskLruCache;//磁盘缓存
     private Context mContext;
     private ImageResizer imageResizer = new ImageResizer();
+
     private static ImageLoader imageLoader;
+
     private static final ThreadFactory sThreadFactory = new ThreadFactory() {
         private final AtomicInteger mCount = new AtomicInteger();
 
@@ -81,7 +82,6 @@ public class ImageLoader {
             LoaderResult result = (LoaderResult) msg.obj;
             ImageView imageView = result.imageView;
             String uri = (String) imageView.getTag(TAG_KEY_URI);
-            Log.d(TAG, "handleMessage");
             if (uri.equals(result.uri)) {
                 imageView.setImageBitmap(result.bitmap);
             } else {
@@ -93,12 +93,12 @@ public class ImageLoader {
 
     private ImageLoader(Context context) {
         this.mContext = context.getApplicationContext();
-        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory());//单位是B(字节)
         int cacheSize = maxMemory / 8;//内存缓存为应用可用内存的1/8
         mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {
-                return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+                return bitmap.getByteCount();
             }
         };
         File diskCacheDir = getDiskCacheDir(mContext, "hm_bitmap");
@@ -116,7 +116,7 @@ public class ImageLoader {
 
     }
 
-    public static ImageLoader build() {
+    public static ImageLoader getInstance() {
         if (imageLoader == null) {
             synchronized (ImageLoader.class) {
                 if (imageLoader == null) {
@@ -144,7 +144,7 @@ public class ImageLoader {
      * @param uri
      * @param imageView bitmap's bind object
      */
-    public void bindBitmap(final String uri, final ImageView imageView) {
+    public void bindBitmap(String uri, ImageView imageView) {
         bindBitmap(uri, imageView, imageView.getWidth(), imageView.getHeight());
     }
 
@@ -205,7 +205,7 @@ public class ImageLoader {
     }
 
     private Bitmap loadBitmapFromMemCache(String url) {
-        String key = hashKeyFromUrl(url);
+        String key = MD5Util.hashKeyFromUrl(url);
         return getBitMapFromMemCache(key);
     }
 
@@ -216,7 +216,7 @@ public class ImageLoader {
         if (mDiskLruCache == null) {
             return null;
         }
-        String key = hashKeyFromUrl(url);
+        String key = MD5Util.hashKeyFromUrl(url);
         DiskLruCache.Editor editor = mDiskLruCache.edit(key);
         if (editor != null) {
             OutputStream outputStream = editor.newOutputStream(DISK_CACHE_INDEX);
@@ -239,7 +239,7 @@ public class ImageLoader {
             return null;
         }
         Bitmap bitmap = null;
-        String key = hashKeyFromUrl(url);
+        String key = MD5Util.hashKeyFromUrl(url);
         DiskLruCache.Snapshot snapshot = mDiskLruCache.get(key);
         if (snapshot != null) {
             FileInputStream fileInputStream = (FileInputStream) snapshot.getInputStream(DISK_CACHE_INDEX);
@@ -334,31 +334,6 @@ public class ImageLoader {
         }
         Log.e("getDiskCacheDir", "cachePath = " + cachePath);
         return new File(cachePath);
-    }
-
-
-    private String hashKeyFromUrl(String url) {
-        String cacheKey;
-        try {
-            final MessageDigest mDigest = MessageDigest.getInstance("MD5");
-            mDigest.update(url.getBytes());
-            cacheKey = bytesToHexString(mDigest.digest());
-        } catch (NoSuchAlgorithmException e) {
-            cacheKey = String.valueOf(url.hashCode());
-        }
-        return cacheKey;
-    }
-
-    private String bytesToHexString(byte[] digest) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < digest.length; i++) {
-            String hex = Integer.toHexString(0xFF & digest[i]);
-            if (hex.length() == 1) {
-                builder.append('0');
-            }
-            builder.append(hex);
-        }
-        return builder.toString();
     }
 
     private static class LoaderResult {

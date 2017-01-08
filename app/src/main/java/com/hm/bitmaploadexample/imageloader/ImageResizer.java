@@ -1,4 +1,4 @@
-package imgloader;
+package com.hm.bitmaploadexample.imageloader;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

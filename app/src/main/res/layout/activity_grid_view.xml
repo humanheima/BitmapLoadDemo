@@ -9,6 +9,6 @@
     android:verticalSpacing="4dp"
     android:stretchMode="columnWidth"
     android:gravity="center"
-    tools:context="com.hm.bitmaploaddemo.activity.GridViewActivity">
+    tools:context=".activity.GridViewActivity">
 
 </GridView>

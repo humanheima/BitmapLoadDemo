@@ -1,8 +1,8 @@
-package com.hm.bitmaploaddemo.utils;
+package com.hm.bitmaploadexample.utils;
 
 import android.text.format.Formatter;
 
-import com.hm.bitmaploaddemo.App;
+import com.hm.bitmaploadexample.App;
 
 import java.io.File;
 

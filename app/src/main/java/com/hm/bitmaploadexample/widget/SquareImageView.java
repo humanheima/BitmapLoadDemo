@@ -1,4 +1,4 @@
-package com.hm.bitmaploaddemo.widget;
+package com.hm.bitmaploadexample.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
