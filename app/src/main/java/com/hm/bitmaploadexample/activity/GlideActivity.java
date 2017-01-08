@@ -23,6 +23,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.hm.bitmaploadexample.R;
+import com.hm.bitmaploadexample.transform.BlurTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
 import com.hm.bitmaploadexample.transform.GlideRoundTransform;
 import com.hm.bitmaploadexample.utils.Images;
@@ -85,6 +86,12 @@ public class GlideActivity extends AppCompatActivity {
         glide7();
         glide8();
         glide9();
+        glide10();
+        glide11();
+        glide12();
+        glide13();
+        glide14();
+        glide15();
     }
 
     /**
@@ -183,6 +190,7 @@ public class GlideActivity extends AppCompatActivity {
                     @Override
                     public boolean onException(Exception e, Uri model, Target<GlideDrawable> target, boolean isFirstResource) {
                         Log.e("onException", e.toString() + "  model:" + model + " isFirstResource: " + isFirstResource);
+                        // important to return false so the error placeholder can be placed
                         return false;
                     }
 
@@ -270,11 +278,73 @@ public class GlideActivity extends AppCompatActivity {
                 .into(viewTarget);
     }
 
+    /**
+     * 自定义变换
+     * 当你使用变换的时候，你不能使用.centerCrop()或者.fitCenter()
+     */
     private void glide10() {
+
+        Glide
+                .with(this)
+                .load(Images.imageUrls[12])
+                // .transform(new GlideRotateTransform(this, 180))//旋转图片
+                .transform(new GlideRoundTransform(this, 40), new BlurTransformation(this))
+                //.bitmapTransform(new BlurTransformation(this)) // this would work too!
+                .into(imageView10);
+    }
+
+    /**
+     * 自定义加载动画
+     */
+    private void glide11() {
+
+        //自定义加载动画
+        // if it's a custom view class, cast it here
+        // then find subviews and do the animations
+        // here, we just use the entire view for the fade animation
+        ViewPropertyAnimation.Animator animator = new ViewPropertyAnimation.Animator() {
+            @Override
+            public void animate(View view) {
+                view.setAlpha(0f);
+                ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f);
+                fadeAnim.setDuration(5000);
+                fadeAnim.start();
+            }
+        };
+
+        Glide.with(this).load(Images.imageUrls[13])
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                // .animate(R.anim.my_anim)//传入一个id
+                .animate(animator)
+                .into(imageView11);
+    }
+
+    /**
+     * 通过加载自定义大小图片优化
+     */
+    private void glide12() {
+        /*String baseImageUrl = "https://futurestud.io/images/example.png";
+        CustomImageSizeModel customImageRequest = new CustomImageSizeModelFutureStudio(baseImageUrl);
+
+        Glide.with(this)
+                .load(customImageRequest)
+                .into(imageView12);*/
+    }
+
+    private void glide13() {
 
     }
 
-    private void glide11() {
+    private void glide14() {
+
+    }
+
+    private void glide15() {
+
+    }
+
+    private void glide16() {
 
     }
 

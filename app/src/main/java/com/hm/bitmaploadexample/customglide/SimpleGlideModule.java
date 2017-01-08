@@ -15,7 +15,9 @@ import com.bumptech.glide.module.GlideModule;
 /**
  * Created by Administrator on 2017/1/6.
  * 自定义glided的行为,需要在AndroidManifest.xml文件中声明
- * <meta-data android:name="SimpleGlideModule" />
+ * <meta-data
+ * android:name="com.hm.bitmaploadexample.customglide.SimpleGlideModule"
+ * android:value="GlideModule" />
  */
 public class SimpleGlideModule implements GlideModule {
     @Override
@@ -37,9 +39,10 @@ public class SimpleGlideModule implements GlideModule {
         // builder.setDiskCache(new InternalCacheDiskCacheFactory(context,diskCacheSize));
         //builder.setDiskCache(new ExternalCacheDiskCacheFactory(context, diskCacheSize));
         //自定义缓存路径
-        String mCachePath = Environment.getDownloadCacheDirectory().getPath();
-        Log.e("mCachePath", mCachePath);
-        builder.setDiskCache(new DiskLruCacheFactory(mCachePath, "hm_cache", diskCacheSize));
+        String mCacheDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath();
+
+        Log.e("mCacheDir", mCacheDir);
+        builder.setDiskCache(new DiskLruCacheFactory(mCacheDir, "hm_cache", diskCacheSize));
     }
 
     @Override

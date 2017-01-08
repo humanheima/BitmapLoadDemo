@@ -24,7 +24,9 @@
         <activity android:name=".activity.GridViewActivity" />
         <activity android:name=".activity.GlideActivity"></activity>
 
-        <!--<meta-data android:name="com.hm.bitmaploadexample.customglide.SimpleGlideModule" />-->
+        <meta-data
+            android:name="com.hm.bitmaploadexample.customglide.SimpleGlideModule"
+            android:value="GlideModule" />
     </application>
 
 </manifest>
