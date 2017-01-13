@@ -145,7 +145,11 @@ public class ImageLoader {
      * @param imageView bitmap's bind object
      */
     public void bindBitmap(String uri, ImageView imageView) {
-        bindBitmap(uri, imageView, imageView.getWidth(), imageView.getHeight());
+        ImageResizer.RequestImageSize requestImageSize = ImageResizer.getImageViewSize(imageView);
+        int reqWidth = requestImageSize.getWidth();
+        int reqHeight = requestImageSize.getHeight();
+        bindBitmap(uri, imageView, reqWidth, reqHeight);
+
     }
 
     public void bindBitmap(final String url, final ImageView imageView, final int reqWidth, final int reqHeight) {

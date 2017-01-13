@@ -20,7 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.TestActivity">
+
+        </activity>
         <activity android:name=".activity.GridViewActivity" />
         <activity android:name=".activity.GlideActivity"></activity>
 

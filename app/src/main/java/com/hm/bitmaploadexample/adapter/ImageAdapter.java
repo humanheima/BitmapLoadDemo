@@ -12,11 +12,8 @@ import android.widget.ImageView;
 
 import com.hm.bitmaploadexample.R;
 import com.hm.bitmaploadexample.imageloader.ImageLoader;
-import com.hm.bitmaploadexample.utils.MyUtils;
 
 import java.util.List;
-
-import static android.R.attr.scaleWidth;
 
 /**
  * Created by Administrator on 2017/1/5.
@@ -28,9 +25,6 @@ public class ImageAdapter extends BaseAdapter implements AbsListView.OnScrollLis
     private Drawable mDefaultBitmapDrawable;
     private ImageLoader imageLoader;
     private boolean mIsGridViewIdle = true;
-    int screenWidth;
-    int space;
-    int mImageWidth;
 
     public ImageAdapter(AbsListView absListView, List<String> mUrList, Context context) {
         absListView.setOnScrollListener(this);
@@ -38,9 +32,6 @@ public class ImageAdapter extends BaseAdapter implements AbsListView.OnScrollLis
         this.context = context;
         mDefaultBitmapDrawable = context.getResources().getDrawable(R.mipmap.ic_launcher);
         imageLoader = ImageLoader.getInstance();
-        screenWidth = MyUtils.getScreenMetrics(context).widthPixels;
-        space = (int) MyUtils.dp2px(context, 8f);
-        mImageWidth = (scaleWidth - space) / 3;
     }
 
     @Override
@@ -77,7 +68,8 @@ public class ImageAdapter extends BaseAdapter implements AbsListView.OnScrollLis
         }
         if (mIsGridViewIdle) {
             imageView.setTag(url);
-            imageLoader.bindBitmap(url, imageView, mImageWidth,mImageWidth);
+            //imageLoader.bindBitmap(url, imageView, mImageWidth,mImageWidth);
+            imageLoader.bindBitmap(url, imageView);
         }
         return convertView;
     }

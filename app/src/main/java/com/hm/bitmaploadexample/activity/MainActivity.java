@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnGridView;
     @BindView(R.id.btn_photo_wall)
     Button btnPhotoWall;
+    @BindView(R.id.btn_test)
+    Button btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_grid_view, R.id.btn_photo_wall})
+    @OnClick({R.id.btn_grid_view, R.id.btn_photo_wall, R.id.btn_test})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_grid_view:
@@ -34,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_photo_wall:
                 startActivity(new Intent(MainActivity.this, GlideActivity.class));
+                break;
+            case R.id.btn_test:
+                startActivity(new Intent(MainActivity.this, TestActivity.class));
+                break;
+            default:
                 break;
         }
     }
