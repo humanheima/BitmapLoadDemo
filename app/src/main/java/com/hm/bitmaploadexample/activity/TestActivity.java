@@ -18,8 +18,6 @@ public class TestActivity extends AppCompatActivity {
     private ImageView imageView;
     private ImageLoader imageLoader;
     private String imgUrl;
-    private int screenWidth;
-    private int imgHeight;
     private String tag = getClass().getSimpleName();
 
     @Override
@@ -27,19 +25,9 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         imageView = (ImageView) findViewById(R.id.img_test);
-
-        ImageResizer.RequestImageSize requestImageSize = ImageResizer.getImageViewSize(imageView);
-        Log.e(tag, "requestImageSize=" + requestImageSize.width + "," + requestImageSize.height);
-
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        Log.e(tag, "displayMetrics.widthPixels=" + displayMetrics.widthPixels + ",displayMetrics.heightPixels=" + displayMetrics.heightPixels);
-
         imageLoader = ImageLoader.getInstance();
-        screenWidth = MyUtils.getScreenMetrics(this).widthPixels;
-        imgHeight = (int) MyUtils.dp2px(this, 160);
         //imgUrl = getIntent().getStringExtra("imgUrl");
         imgUrl = Images.imageUrls[0];
-        Log.e(tag, imageView.getHeight() + "," + imageView.getWidth());
         if (!TextUtils.isEmpty(imgUrl)) {
             imageLoader.bindBitmap(imgUrl, imageView);
         }
