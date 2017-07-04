@@ -101,6 +101,8 @@ public class GlideActivity extends AppCompatActivity {
     private void glide1() {
         //从网络加载
         Glide.with(this).load(Images.imageUrls[1])
+                //.asBitmap()
+               // .asGif()
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .crossFade(300)//使用cross fade动画
@@ -333,7 +335,6 @@ public class GlideActivity extends AppCompatActivity {
     }
 
     private void glide13() {
-
     }
 
     private void glide14() {

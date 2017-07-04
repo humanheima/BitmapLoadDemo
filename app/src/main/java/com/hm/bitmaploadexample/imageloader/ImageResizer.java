@@ -14,7 +14,7 @@ import java.io.FileDescriptor;
 import java.lang.reflect.Field;
 
 /**
- * Created by Administrator on 2017/1/5.
+ * Created by dumingwei on 2017/1/5.
  */
 public class ImageResizer {
 

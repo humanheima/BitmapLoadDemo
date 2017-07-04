@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BitmapLoadDemo.iml" filepath="$PROJECT_DIR$/BitmapLoadDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/learnreflect/learnreflect.iml" filepath="$PROJECT_DIR$/learnreflect/learnreflect.iml" />
     </modules>
   </component>
 </project>
