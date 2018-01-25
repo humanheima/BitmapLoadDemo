@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
  * 将图像转换为四个角有弧度的图像
  */
 public class GlideRoundTransform extends BitmapTransformation {
+
     private float radius = 0f;
 
     public GlideRoundTransform(Context context) {
@@ -45,7 +46,7 @@ public class GlideRoundTransform extends BitmapTransformation {
         paint.setAntiAlias(true);
         RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
         canvas.drawRoundRect(rectF, radius, radius, paint);
-        Log.e("11aa", radius + "");
+        Log.e("roundCrop", radius + "");
         return result;
     }
 

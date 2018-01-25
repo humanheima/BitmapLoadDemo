@@ -1,15 +1,12 @@
 package com.hm.bitmaploadexample.imageloader;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.StatFs;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.widget.ImageView;
@@ -37,7 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
- * Created by Administrator on 2017/1/5.
+ * Created by dumingwei on 2017/1/5.
  */
 public class ImageLoader {
 
@@ -69,7 +66,7 @@ public class ImageLoader {
         }
     };
 
-    public static final Executor THREAD_POOL_EXECTOR = new ThreadPoolExecutor(
+    public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
             CORE_POOL_SIZE,
             MAXIMUM_POOL_SIZE,
             KEEP_ALIVE,
@@ -113,7 +110,6 @@ public class ImageLoader {
                 e.printStackTrace();
             }
         }
-
     }
 
     public static ImageLoader getInstance() {
@@ -149,7 +145,6 @@ public class ImageLoader {
         int reqWidth = requestImageSize.getWidth();
         int reqHeight = requestImageSize.getHeight();
         bindBitmap(uri, imageView, reqWidth, reqHeight);
-
     }
 
     public void bindBitmap(final String url, final ImageView imageView, final int reqWidth, final int reqHeight) {
@@ -162,6 +157,7 @@ public class ImageLoader {
         Runnable loadBitmapTask = new Runnable() {
             @Override
             public void run() {
+                Log.e(TAG, "loadBitmapTask run in Thread:" + Thread.currentThread().getName());
                 Bitmap bitmap = loadBitmap(url, reqWidth, reqHeight);
                 if (bitmap != null) {
                     LoaderResult result = new LoaderResult(imageView, url, bitmap);
@@ -171,7 +167,7 @@ public class ImageLoader {
                 Log.e(TAG, "loadBitmapTask bitmap ==null");
             }
         };
-        THREAD_POOL_EXECTOR.execute(loadBitmapTask);
+        THREAD_POOL_EXECUTOR.execute(loadBitmapTask);
     }
 
     /**
@@ -189,7 +185,6 @@ public class ImageLoader {
             Log.d(TAG, "load bitmap from memory cache url:" + url);
             return bitmap;
         }
-
         try {
             bitmap = loadBitmapFromDiskCache(url, reqWidth, reqHeight);
             if (bitmap != null) {
@@ -318,14 +313,8 @@ public class ImageLoader {
         return bitmap;
     }
 
-
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     private long getUsableSpace(File diskCacheDir) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            return diskCacheDir.getUsableSpace();
-        }
-        final StatFs statFs = new StatFs(diskCacheDir.getPath());
-        return statFs.getBlockSizeLong() * statFs.getAvailableBlocksLong();
+        return diskCacheDir.getUsableSpace();
     }
 
     private File getDiskCacheDir(Context mContext, String hm_bitmap) {

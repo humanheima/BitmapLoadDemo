@@ -12,6 +12,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 正确使用Handler的方式
+ * 参考链接
+ * https://my.oschina.net/rengwuxian/blog/181449
+ */
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_grid_view)
@@ -38,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, GlideActivity.class));
                 break;
             case R.id.btn_test:
-                startActivity(new Intent(MainActivity.this, TestActivity.class));
+                TestActivity.launch(this);
                 break;
             default:
                 break;

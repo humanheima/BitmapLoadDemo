@@ -23,7 +23,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.hm.bitmaploadexample.R;
-import com.hm.bitmaploadexample.transform.BlurTransformation;
+import com.hm.bitmaploadexample.transform.CircleTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
 import com.hm.bitmaploadexample.transform.GlideRoundTransform;
 import com.hm.bitmaploadexample.utils.Images;
@@ -79,8 +79,9 @@ public class GlideActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         glide1();
         glide2();
+        //glide2x();
         glide3();
-        // glide4();
+        //glide4();
         glide5();
         glide6();
         glide7();
@@ -102,7 +103,7 @@ public class GlideActivity extends AppCompatActivity {
         //从网络加载
         Glide.with(this).load(Images.imageUrls[1])
                 //.asBitmap()
-               // .asGif()
+                // .asGif()
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .crossFade(300)//使用cross fade动画
@@ -231,9 +232,9 @@ public class GlideActivity extends AppCompatActivity {
         Glide.with(this).load(Images.imageUrls[6])
                 .priority(Priority.IMMEDIATE)
                 .into(imageView6);
-        Glide.with(this).load(Images.imageUrls[7])
+      /*  Glide.with(this).load(Images.imageUrls[7])
                 .priority(Priority.LOW)
-                .into(imageView7);
+                .into(imageView7);*/
     }
 
     /**
@@ -242,11 +243,11 @@ public class GlideActivity extends AppCompatActivity {
     private void glide7() {
         DrawableRequestBuilder<String> thumbnailRequest =
                 Glide.with(this)
-                        .load(Images.imageUrls[10]);//这个图片地址应该是大图的缩略图地址
+                        .load("https://www.baidu.com/img/bd_logo1.png");//这个图片地址应该是大图的缩略图地址
 
         Glide.with(this).load(Images.imageUrls[10])
                 .thumbnail(thumbnailRequest)
-                .into(imageView8);
+                .into(imageView7);
 
     }
 
@@ -257,7 +258,7 @@ public class GlideActivity extends AppCompatActivity {
         SimpleTarget<Bitmap> simpleTarget = new SimpleTarget<Bitmap>(400, 400) {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                imageView9.setImageBitmap(resource);
+                imageView8.setImageBitmap(resource);
             }
         };
         Glide.with(this)
@@ -285,12 +286,10 @@ public class GlideActivity extends AppCompatActivity {
      * 当你使用变换的时候，你不能使用.centerCrop()或者.fitCenter()
      */
     private void glide10() {
-
-        Glide
-                .with(this)
+        Glide.with(this)
                 .load(Images.imageUrls[12])
                 // .transform(new GlideRotateTransform(this, 180))//旋转图片
-                .transform(new GlideRoundTransform(this, 40), new BlurTransformation(this))
+                .transform(new GlideRoundTransform(this,20))
                 //.bitmapTransform(new BlurTransformation(this)) // this would work too!
                 .into(imageView10);
     }
@@ -323,18 +322,24 @@ public class GlideActivity extends AppCompatActivity {
     }
 
     /**
-     * 通过加载自定义大小图片优化
+     * 加载原始大小图片
      */
     private void glide12() {
-        /*String baseImageUrl = "https://futurestud.io/images/example.png";
-        CustomImageSizeModel customImageRequest = new CustomImageSizeModelFutureStudio(baseImageUrl);
-
-        Glide.with(this)
-                .load(customImageRequest)
-                .into(imageView12);*/
+        String url = "https://www.baidu.com/img/bd_logo1.png";
+        Glide.with(this).load(url)
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .into(imageView12);
     }
 
+    /**
+     * 圆形变换
+     */
     private void glide13() {
+        Glide.with(this)
+                .load(Images.imageUrls[20])
+                .transform(new CircleTransformation(this))
+                .into(imageView13);
+
     }
 
     private void glide14() {
