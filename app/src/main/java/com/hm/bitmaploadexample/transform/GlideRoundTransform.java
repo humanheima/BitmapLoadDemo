@@ -1,57 +1,73 @@
 package com.hm.bitmaploadexample.transform;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.util.Util;
+
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
 
 /**
  * 将图像转换为四个角有弧度的图像
+ * {@link com.bumptech.glide.load.resource.bitmap.RoundedCorners}
  */
 public class GlideRoundTransform extends BitmapTransformation {
 
-    private float radius = 0f;
+    private static final String ID = "com.hm.bitmaploadexample.transform.GlideRoundTransform";
+    private static final byte[] ID_BYTES = ID.getBytes(CHARSET);
 
-    public GlideRoundTransform(Context context) {
-        this(context, 100);
-    }
+    private final int roundingRadius;
 
-    public GlideRoundTransform(Context context, int dp) {
-        super(context);
-        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
+    public GlideRoundTransform(int roundingRadius) {
+        this.roundingRadius = roundingRadius;
     }
 
     @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
         return roundCrop(pool, toTransform);
+    }
+
+    @Override
+    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+        messageDigest.update(ID_BYTES);
+        byte[] radiusData = ByteBuffer.allocate(4).putInt(roundingRadius).array();
+        messageDigest.update(radiusData);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof GlideRoundTransform) {
+            GlideRoundTransform other = (GlideRoundTransform) o;
+            return roundingRadius == other.roundingRadius;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Util.hashCode(ID.hashCode(), Util.hashCode(roundingRadius));
     }
 
     private Bitmap roundCrop(BitmapPool pool, Bitmap source) {
         if (source == null) return null;
-
-        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_4444);
-        if (result == null) {
-            result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_4444);
-        }
+        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
         paint.setAntiAlias(true);
         RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
-        canvas.drawRoundRect(rectF, radius, radius, paint);
-        Log.e("roundCrop", radius + "");
+        canvas.drawRoundRect(rectF, roundingRadius, roundingRadius, paint);
+        Log.e("roundCrop", roundingRadius + "");
         return result;
     }
 
-    @Override
-    public String getId() {
-        return getClass().getName() + Math.round(radius);
-    }
 }

@@ -163,7 +163,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="加载原始图片大小imageView12"/>
+            android:layout_gravity="center_horizontal"
+            android:text="imageView12"/>
 
         <ImageView
             android:id="@+id/imageView12"
@@ -175,7 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="圆形变换imageView13"/>
+            android:text="imageView13"/>
 
         <ImageView
             android:id="@+id/imageView13"

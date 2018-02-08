@@ -34,12 +34,12 @@ public class FutureStudioView extends FrameLayout {
     private void initialize(Context context) {
         inflate(context, R.layout.custom_view_futurestudio, this);
 
-        iv = (ImageView) findViewById(R.id.custom_view_image);
-        tv = (TextView) findViewById(R.id.custom_text_view);
+        iv = findViewById(R.id.custom_view_image);
+        tv = findViewById(R.id.custom_text_view);
     }
 
     public void setImage(Drawable drawable) {
-        iv = (ImageView) findViewById(R.id.custom_view_image);
+        iv = findViewById(R.id.custom_view_image);
         iv.setImageDrawable(drawable);
     }
 

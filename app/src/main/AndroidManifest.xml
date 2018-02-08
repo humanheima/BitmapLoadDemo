@@ -32,10 +32,6 @@
             android:name=".activity.GlideActivity"
             android:screenOrientation="portrait"/>
 
-        <meta-data
-            android:name="com.hm.bitmaploadexample.customglide.SimpleGlideModule"
-            android:value="GlideModule"/>
-
     </application>
 
 </manifest>

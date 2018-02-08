@@ -2,6 +2,7 @@ package com.hm.bitmaploadexample.transform;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
@@ -9,17 +10,27 @@ import android.support.v8.renderscript.ScriptIntrinsicBlur;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.util.Util;
+
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
 
 /**
- * Created by Administrator on 2017/1/8.
+ * Created by dumingwei on 2017/1/8.
+ * 不好使啊
  */
 public class BlurTransformation extends BitmapTransformation {
 
-    private RenderScript rs;
+    private static final String ID = "com.hm.bitmaploadexample.transform.GlideRoundTransform";
+    private static final byte[] ID_BYTES = ID.getBytes(CHARSET);
 
-    public BlurTransformation(Context context) {
-        super(context);
+    private RenderScript rs;
+    private int radius = 10;
+
+    public BlurTransformation(Context context, int radius) {
         rs = RenderScript.create(context);
+        this.radius = radius;
     }
 
     @Override
@@ -41,7 +52,7 @@ public class BlurTransformation extends BitmapTransformation {
         script.setInput(input);
 
         // Set the blur radius
-        script.setRadius(10);
+        script.setRadius(radius);
 
         // Start the ScriptIntrinisicBlur
         script.forEach(output);
@@ -49,14 +60,30 @@ public class BlurTransformation extends BitmapTransformation {
         // Copy the output to the blurred bitmap
         output.copyTo(blurredBitmap);
 
-        toTransform.recycle();
+        //toTransform.recycle();
 
         return blurredBitmap;
 
     }
 
     @Override
-    public String getId() {
-        return "blur";
+    public int hashCode() {
+        return Util.hashCode(ID.hashCode(), Util.hashCode(radius));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof BlurTransformation) {
+            BlurTransformation other = (BlurTransformation) o;
+            return this.radius == other.radius;
+        }
+        return false;
+    }
+
+    @Override
+    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+        messageDigest.update(ID_BYTES);
+        byte[] radiusData = ByteBuffer.allocate(4).putInt(radius).array();
+        messageDigest.update(radiusData);
     }
 }
