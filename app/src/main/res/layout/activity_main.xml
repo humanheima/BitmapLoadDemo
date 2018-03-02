@@ -12,19 +12,23 @@
             android:id="@+id/btn_grid_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="click" />
+            android:text="click"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_photo_wall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="启动 GlideActivity" />
+            android:text="启动 GlideActivity"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="启动 TestActivity" />
+            android:text="启动 TestActivity"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </ScrollView>
