@@ -10,15 +10,13 @@ public class App extends Application {
 
     private static Application context;
 
+    public static Context getInstance() {
+        return context;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
-    }
-
-
-    public static Context getInstance() {
-        return context;
     }
 }

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_grid_view, R.id.btn_photo_wall, R.id.btn_test})
+    @OnClick({R.id.btn_grid_view, R.id.btn_photo_wall, R.id.btn_test, R.id.btn_load_large_image})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_grid_view:
@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_test:
                 TestActivity.launch(this);
+                break;
+            case R.id.btn_load_large_image:
+                LargeImageViewActivity.launch(this);
                 break;
             default:
                 break;

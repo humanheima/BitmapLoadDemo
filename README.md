@@ -23,3 +23,7 @@ private static int calculateInSampleSize(BitmapFactory.Options options, int reqW
         return inSampleSize;
     }
 ```
+
+Load large image.
+
+[subsampling-scale-image-view](https://github.com/davemorrissey/subsampling-scale-image-view)

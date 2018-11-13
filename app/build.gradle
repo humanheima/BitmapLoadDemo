@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.hm.bitmaploadexample"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -29,12 +29,15 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
     implementation "com.android.support:support-v4:$rootProject.ext.supportVersion"
     implementation 'com.jakewharton:butterknife:8.4.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.github.bumptech.glide:glide:4.6.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //glide use okhttp
     implementation "com.github.bumptech.glide:okhttp3-integration:4.6.1"
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation 'jp.wasabeef:glide-transformations:2.0.2'
+    //load large image
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 }
