@@ -9,6 +9,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn_test_image_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试不同大小的图片加载到相同大小的ImageView上，所占用的内存是否相等"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/btn_grid_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
