@@ -7,15 +7,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.util.LruCache;
 import android.util.Log;
+import android.util.LruCache;
 import android.widget.ImageView;
-
 import com.hm.bitmaploadexample.App;
 import com.hm.bitmaploadexample.R;
 import com.hm.bitmaploadexample.libcore.io.DiskLruCache;
 import com.hm.bitmaploadexample.utils.MD5Util;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -304,7 +302,8 @@ public class ImageLoader {
                 urlConnection.disconnect();
             }
             try {
-                if (in != null) ;
+                if (in != null)
+                    ;
                 in.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -330,6 +329,7 @@ public class ImageLoader {
     }
 
     private static class LoaderResult {
+
         public ImageView imageView;
         public String uri;
         public Bitmap bitmap;

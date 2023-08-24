@@ -3,13 +3,11 @@ package com.hm.bitmaploadexample.activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.ScrollView;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
@@ -20,7 +18,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.hm.bitmaploadexample.GlideApp;
 import com.hm.bitmaploadexample.R;
 import com.hm.bitmaploadexample.transform.BlurTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
@@ -28,47 +25,26 @@ import com.hm.bitmaploadexample.transform.GlideRoundTransform;
 import com.hm.bitmaploadexample.utils.Images;
 import com.hm.bitmaploadexample.widget.FutureStudioView;
 
-import java.io.File;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * 使用glide
  */
 public class GlideActivity extends AppCompatActivity {
 
-    @BindView(R.id.imageView1)
     ImageView imageView1;
-    @BindView(R.id.activity_glide)
     ScrollView activityGlide;
-    @BindView(R.id.imageView2)
     ImageView imageView2;
-    @BindView(R.id.imageView3)
     ImageView imageView3;
-    @BindView(R.id.imageView4)
     ImageView imageView4;
-    @BindView(R.id.imageView5)
     ImageView imageView5;
-    @BindView(R.id.imageView6)
     ImageView imageView6;
-    @BindView(R.id.imageView7)
     ImageView imageView7;
-    @BindView(R.id.imageView8)
     ImageView imageView8;
-    @BindView(R.id.imageView9)
     ImageView imageView9;
-    @BindView(R.id.imageView10)
     ImageView imageView10;
-    @BindView(R.id.imageView11)
     ImageView imageView11;
-    @BindView(R.id.imageView12)
     ImageView imageView12;
-    @BindView(R.id.imageView13)
     ImageView imageView13;
-    @BindView(R.id.imageView14)
     ImageView imageView14;
-    @BindView(R.id.future_tudioV_iew)
     FutureStudioView futureTudioVIew;
 
     private RequestOptions options;
@@ -77,7 +53,8 @@ public class GlideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glide);
-        ButterKnife.bind(this);
+
+        findViews();
         options = new RequestOptions()
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher);
@@ -96,6 +73,25 @@ public class GlideActivity extends AppCompatActivity {
         glide12();
         glide13();
         glide15();
+    }
+
+    private void findViews() {
+        imageView1 = findViewById(R.id.imageView1);
+        activityGlide = findViewById(R.id.activity_glide);
+        imageView2 = findViewById(R.id.imageView2);
+        imageView3 = findViewById(R.id.imageView3);
+        imageView4 = findViewById(R.id.imageView4);
+        imageView5 = findViewById(R.id.imageView5);
+        imageView6 = findViewById(R.id.imageView6);
+        imageView7 = findViewById(R.id.imageView7);
+        imageView8 = findViewById(R.id.imageView8);
+        imageView9 = findViewById(R.id.imageView9);
+        imageView10 = findViewById(R.id.imageView10);
+        imageView11 = findViewById(R.id.imageView11);
+        imageView12 = findViewById(R.id.imageView12);
+        imageView13 = findViewById(R.id.imageView13);
+        imageView14 = findViewById(R.id.imageView14);
+        futureTudioVIew = findViewById(R.id.future_tudio_view);
     }
 
     /**
@@ -198,14 +194,16 @@ public class GlideActivity extends AppCompatActivity {
                 .load(Images.imageUrls[11])
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource,
+                            @Nullable Transition<? super Bitmap> transition) {
                         imageView8.setImageBitmap(resource);
                     }
                 });
     }
 
     private void glide9() {
-        ViewTarget<FutureStudioView, Drawable> viewTarget = new ViewTarget<FutureStudioView, Drawable>(futureTudioVIew) {
+        ViewTarget<FutureStudioView, Drawable> viewTarget = new ViewTarget<FutureStudioView, Drawable>(
+                futureTudioVIew) {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 futureTudioVIew.setImage(resource);
@@ -257,7 +255,7 @@ public class GlideActivity extends AppCompatActivity {
      * 使用 Generated API
      */
     private void glide13() {
-        GlideApp.with(this)
+        Glide.with(this)
                 .load(Images.imageUrls[12])
                 .override(480, 800)
                 .into(imageView13);

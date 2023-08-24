@@ -2,14 +2,11 @@ package com.hm.bitmaploadexample.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.hm.bitmaploadexample.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 正确使用Handler的方式
@@ -18,23 +15,15 @@ import butterknife.ButterKnife;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @BindView(R.id.btn_grid_view)
     Button btnGridView;
-    @BindView(R.id.btn_photo_wall)
     Button btnPhotoWall;
-    @BindView(R.id.btn_test)
     Button btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_test_image_size).setOnClickListener(this);
-
-        ButterKnife.bind(this);
     }
-
-    //@OnClick({R.id.btn_grid_view, R.id.btn_photo_wall, R.id.btn_test, R.id.btn_load_large_image})
 
     @Override
     public void onClick(View view) {
@@ -43,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ImageSizeForMemoryTestActivity.launch(this);
         } else if (id == R.id.btn_grid_view) {
             startActivity(new Intent(MainActivity.this, GridViewActivity.class));
-        } else if (id == R.id.btn_photo_wall) {
+        } else if (id == R.id.btn_glide_all) {
             startActivity(new Intent(MainActivity.this, GlideActivity.class));
         } else if (id == R.id.btn_test) {
             TestActivity.launch(this);
