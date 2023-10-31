@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TestActivity.launch(this);
         } else if (id == R.id.btn_load_large_image) {
             LargeImageViewActivity.launch(this);
+        } else if (id == R.id.btn_source_code) {
+            startActivity(new Intent(MainActivity.this, GlideSourceCodeActivity.class));
         }
     }
 }
