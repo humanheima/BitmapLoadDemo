@@ -3,6 +3,7 @@ package com.hm.bitmaploadexample.activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import androidx.annotation.NonNull;
@@ -15,9 +16,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.hm.bitmaploadexample.GlideApp;
 import com.hm.bitmaploadexample.R;
 import com.hm.bitmaploadexample.transform.BlurTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
@@ -29,6 +32,8 @@ import com.hm.bitmaploadexample.widget.FutureStudioView;
  * 使用glide
  */
 public class GlideActivity extends AppCompatActivity {
+
+    private static final String TAG = "GlideActivity";
 
     ImageView imageView1;
     ScrollView activityGlide;
@@ -45,6 +50,8 @@ public class GlideActivity extends AppCompatActivity {
     ImageView imageView12;
     ImageView imageView13;
     ImageView imageView14;
+    ImageView imageView15;
+
     FutureStudioView futureTudioVIew;
 
     private RequestOptions options;
@@ -55,9 +62,7 @@ public class GlideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_glide);
 
         findViews();
-        options = new RequestOptions()
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher);
+        options = new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher);
 
         glide1();
         glide2();
@@ -72,7 +77,10 @@ public class GlideActivity extends AppCompatActivity {
         glide11();
         glide12();
         glide13();
-        glide15();
+
+        glideIntoTarget();
+
+        useGlideApp();
     }
 
     private void findViews() {
@@ -92,6 +100,7 @@ public class GlideActivity extends AppCompatActivity {
         imageView13 = findViewById(R.id.imageView13);
         imageView14 = findViewById(R.id.imageView14);
         futureTudioVIew = findViewById(R.id.future_tudio_view);
+        imageView15 = findViewById(R.id.imageView15);
     }
 
     /**
@@ -101,6 +110,7 @@ public class GlideActivity extends AppCompatActivity {
     private void glide1() {
         //从网络加载
         Glide.with(this)
+                //.asGif()
                 .load(Images.imageUrls[1])
                 // .asGif()
                 .apply(options)
@@ -125,6 +135,9 @@ public class GlideActivity extends AppCompatActivity {
                 .into(imageView2);
     }
 
+    /**
+     * 应用多个变换
+     */
     private void glide3() {
         //自定义圆角、旋转、模糊图片,应用变换的顺序不一样，结果会不一样
         Glide.with(this).load(Images.imageUrls[5])
@@ -136,6 +149,11 @@ public class GlideActivity extends AppCompatActivity {
                         )
                 ))
                 .into(imageView3);
+
+        //另外一种方法。
+//        Glide.with(this).load(Images.imageUrls[5])
+//                .transform(new FitCenter(), new BlurTransformation(this, 15), new GlideRotateTransform(180))
+//                .into(imageView3);
     }
 
     /**
@@ -183,20 +201,46 @@ public class GlideActivity extends AppCompatActivity {
         Glide.with(this).load(Images.imageUrls[10])
                 .thumbnail(Glide.with(this).load(thumbnailUrl))
                 .into(imageView7);
+
+        //第二种方法
+        Glide.with(this).load(Images.imageUrls[10])
+                .thumbnail(0.25f)
+                .into(imageView7);
     }
 
     /**
      * 定制view中使用SimpleTarget和ViewTarget
      */
     private void glide8() {
+//        Glide.with(this)
+//                .asBitmap()
+//                .load(Images.imageUrls[11])
+//                .into(new SimpleTarget<Bitmap>() {
+//                    @Override
+//                    public void onResourceReady(@NonNull Bitmap resource,
+//                            @Nullable Transition<? super Bitmap> transition) {
+//                        imageView8.setImageBitmap(resource);
+//                    }
+//                });
+
         Glide.with(this)
                 .asBitmap()
                 .load(Images.imageUrls[11])
-                .into(new SimpleTarget<Bitmap>() {
+                .into(new CustomViewTarget<ImageView, Bitmap>(imageView8) {
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    }
+
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource,
                             @Nullable Transition<? super Bitmap> transition) {
+                        Log.i(TAG, "glide8 CustomViewTarget onResourceReady: ");
                         imageView8.setImageBitmap(resource);
+                    }
+
+                    @Override
+                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+
                     }
                 });
     }
@@ -220,6 +264,7 @@ public class GlideActivity extends AppCompatActivity {
     private void glide10() {
         Glide.with(this)
                 .load(Images.imageUrls[12])
+                //.fitCenter()
                 .apply(new RequestOptions().transform(new GlideRoundTransform(20)))
                 /*.apply(new RequestOptions().transform(new MultiTransformation<>(
                         new RoundedCorners(20),
@@ -232,9 +277,10 @@ public class GlideActivity extends AppCompatActivity {
      * 圆形变换
      */
     private void glide11() {
+        RequestOptions requestOptions = new RequestOptions().transform(new CircleCrop());
         Glide.with(this)
                 .load(Images.imageUrls[20])
-                .apply(new RequestOptions().transform(new CircleCrop()))
+                .apply(requestOptions)
                 .into(imageView11);
     }
 
@@ -261,11 +307,32 @@ public class GlideActivity extends AppCompatActivity {
                 .into(imageView13);
     }
 
-    private void glide14() {
+    private void glideIntoTarget() {
+        Glide.with(this)
+                .load(Images.imageUrls[12])
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource,
+                            @Nullable Transition<? super Drawable> transition) {
+                        Log.i(TAG, "glideIntoTarget onResourceReady: ");
+                        imageView14.setImageDrawable(resource);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
 
     }
 
-    private void glide15() {
+    private void useGlideApp() {
+        GlideApp.with(this)
+                //.mAsGif()
+                .load(Images.imageUrls[15])
+                .miniThumb(50)
+                .into(imageView15);
+
 
     }
 

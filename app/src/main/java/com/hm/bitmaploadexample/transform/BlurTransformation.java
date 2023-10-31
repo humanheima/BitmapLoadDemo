@@ -15,7 +15,10 @@ import java.security.MessageDigest;
 
 /**
  * Created by dumingwei on 2017/1/8.
- * 不好使啊
+ * 重用变换
+ * Transformation 的设计初衷是无状态的。
+ * 因此，在多个加载中复用 Transformation 应当总是安全的。
+ * 创建一次 Transformation 并在多个加载中使用它，通常是很好的实践。
  */
 public class BlurTransformation extends BitmapTransformation {
 

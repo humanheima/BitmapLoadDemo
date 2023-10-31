@@ -19,15 +19,15 @@
         <Button
                 android:onClick="onClick"
                 android:id="@+id/btn_grid_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="click"
+                android:text="启动GridViewActivity,测试RecyclerView手动异步加载图片"
                 android:textAllCaps="false" />
 
         <Button
                 android:onClick="onClick"
                 android:id="@+id/btn_glide_all"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="启动 GlideActivity"
                 android:textAllCaps="false" />
@@ -35,7 +35,7 @@
         <Button
                 android:onClick="onClick"
                 android:id="@+id/btn_test"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="启动 TestActivity"
                 android:textAllCaps="false" />
@@ -43,7 +43,7 @@
         <Button
                 android:onClick="onClick"
                 android:id="@+id/btn_load_large_image"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="加载大图"
                 android:textAllCaps="false" />
