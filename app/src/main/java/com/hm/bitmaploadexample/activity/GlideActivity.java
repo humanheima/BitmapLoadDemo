@@ -16,12 +16,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.hm.bitmaploadexample.GlideApp;
 import com.hm.bitmaploadexample.R;
+import com.hm.bitmaploadexample.activity.sourcecode.MyCustomViewTarget;
 import com.hm.bitmaploadexample.transform.BlurTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
 import com.hm.bitmaploadexample.transform.GlideRoundTransform;
@@ -310,16 +310,22 @@ public class GlideActivity extends AppCompatActivity {
     private void glideIntoTarget() {
         Glide.with(this)
                 .load(Images.imageUrls[12])
-                .into(new CustomTarget<Drawable>() {
+                .into(new MyCustomViewTarget<ImageView, Drawable>(imageView14) {
+
+
                     @Override
-                    public void onResourceReady(@NonNull Drawable resource,
-                            @Nullable Transition<? super Drawable> transition) {
-                        Log.i(TAG, "glideIntoTarget onResourceReady: ");
-                        imageView14.setImageDrawable(resource);
+                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+
                     }
 
                     @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource,
+                            @Nullable Transition<? super Drawable> transition) {
 
                     }
                 });

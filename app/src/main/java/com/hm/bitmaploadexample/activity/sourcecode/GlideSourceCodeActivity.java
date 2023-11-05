@@ -1,4 +1,4 @@
-package com.hm.bitmaploadexample.activity;
+package com.hm.bitmaploadexample.activity.sourcecode;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;

@@ -13,7 +13,15 @@
                 android:id="@+id/btn_source_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="源码分析"
+                android:text="Glide源码分析"
+                android:textAllCaps="false" />
+
+        <Button
+                android:onClick="onClick"
+                android:id="@+id/btn_source_code_in_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="源码分析Glide在RecyclerView中使用"
                 android:textAllCaps="false" />
 
         <Button

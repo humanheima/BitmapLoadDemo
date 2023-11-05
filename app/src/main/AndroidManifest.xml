@@ -34,7 +34,8 @@
                 android:screenOrientation="portrait" />
         <activity android:name=".activity.LoadLargeImageActivity" />
         <activity android:name=".activity.LargeImageViewActivity" />
-        <activity android:name=".activity.GlideSourceCodeActivity" />
+        <activity android:name=".activity.sourcecode.GlideSourceCodeActivity" />
+        <activity android:name=".activity.sourcecode.GlideRecyclerViewActivity" />
     </application>
 
 </manifest>
