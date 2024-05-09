@@ -311,6 +311,9 @@ public abstract class MyCustomViewTarget<T extends View, Z> implements Target<Z>
         isAttachStateListenerAdded = false;
     }
 
+    /**
+     * 用来获取Target的宽高
+     */
     @VisibleForTesting
     static final class SizeDeterminer {
 

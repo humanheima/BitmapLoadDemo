@@ -7,7 +7,7 @@ public class Images {
 
     public static String[] imageUrls = {
             "https://i.imgur.com/6Mkilm4.jpg",
-            "https://bookcdn.rongshuxia.com/column/1698746773444.png",
+            "https://zmdcharactercdn.zhumengdao.com/5b5c7bae0617129023ecc9918a7e52c5.png",
 
             "https://bookcdn.rongshuxia.com/column/1698829335235.png",
             "https://bookcdn.rongshuxia.com/column/1698828868760.png",

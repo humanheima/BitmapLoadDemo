@@ -14,7 +14,6 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
@@ -64,7 +63,8 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
         findViews();
         options = new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher);
 
-        glide1();
+        sourceCodeTest();
+        //glide1();
 //        glide2();
 //        glide3();
 //        glide4();
@@ -101,6 +101,15 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
         imageView14 = findViewById(R.id.imageView14);
         futureTudioVIew = findViewById(R.id.future_tudio_view);
         imageView15 = findViewById(R.id.imageView15);
+    }
+
+    /**
+     * 最简单的使用方式
+     */
+    private void sourceCodeTest() {
+        Glide.with(this)
+                .load(Images.imageUrls[1])
+                .into(imageView1);
     }
 
     /**

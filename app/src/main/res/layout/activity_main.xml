@@ -8,6 +8,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+        <ImageView
+                android:id="@+id/iv_blur"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
         <Button
                 android:onClick="onClick"
                 android:id="@+id/btn_source_code"

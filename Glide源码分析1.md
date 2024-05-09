@@ -1,3 +1,18 @@
+
+# todo，还没完成，还得继续
+
+```java
+/**
+ * 最简单的使用方式
+ */
+private void sourceCodeTest() {
+    Glide.with(this)
+		.load(Images.imageUrls[1])
+		.into(imageView1);
+}
+```
+
+
 RequestManager
 
 

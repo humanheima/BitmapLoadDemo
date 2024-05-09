@@ -43,7 +43,7 @@ private void setTag(@Nullable Object tag) {
 ```
 
 
-然后我们在RecyclerView 的适配器 onBindViewHolder 方法中，调用 glideIntoTarget 方法。 
+然后我们在RecyclerView 的适配器 onBindViewHolder 方法中，加载图片。 
 
 Glide#into传入的是一个 MyCustomViewTarget 对象。
 
@@ -80,6 +80,7 @@ class RvAdapter(private val mData: List<String>) : RecyclerView.Adapter<RvAdapte
             }
 
         }
+        //加载图片
         private fun glideIntoTarget(context: Context, url: String, imageView: ImageView) {
             Glide.with(context)
                 .load(url)
