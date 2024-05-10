@@ -15,7 +15,7 @@ import com.bumptech.glide.module.AppGlideModule;
 /**
  * Created by dumingwei on 2018/2/8 0008.
  */
-@GlideModule()
+//@GlideModule()
 public class HmGlideModule extends AppGlideModule {
 
     private final String TAG = getClass().getName();

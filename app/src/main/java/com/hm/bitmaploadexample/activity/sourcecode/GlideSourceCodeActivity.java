@@ -19,7 +19,6 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.hm.bitmaploadexample.GlideApp;
 import com.hm.bitmaploadexample.R;
 import com.hm.bitmaploadexample.transform.BlurTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
@@ -336,11 +335,11 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
     }
 
     private void useGlideApp() {
-        GlideApp.with(this)
-                //.mAsGif()
-                .load(Images.imageUrls[15])
-                .miniThumb(50)
-                .into(imageView15);
+//        GlideApp.with(this)
+//                //.mAsGif()
+//                .load(Images.imageUrls[15])
+//                .miniThumb(50)
+//                .into(imageView15);
 
 
     }
