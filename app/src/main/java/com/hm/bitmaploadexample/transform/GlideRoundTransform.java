@@ -19,6 +19,7 @@ import java.security.MessageDigest;
 /**
  * 将图像转换为四个角有弧度的图像
  * {@link com.bumptech.glide.load.resource.bitmap.RoundedCorners}
+ * 貌似不起作用了
  */
 public class GlideRoundTransform extends BitmapTransformation {
 

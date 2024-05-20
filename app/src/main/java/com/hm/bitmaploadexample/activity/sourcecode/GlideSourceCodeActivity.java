@@ -14,6 +14,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.DrawableTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
@@ -108,6 +109,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
     private void sourceCodeTest() {
         Glide.with(this)
                 .load(Images.imageUrls[1])
+                .transform(new BlurTransformation(this, 15))
                 .into(imageView1);
     }
 
