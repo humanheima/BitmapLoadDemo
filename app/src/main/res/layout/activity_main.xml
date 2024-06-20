@@ -8,10 +8,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+        <Button
+                android:onClick="onClick"
+                android:id="@+id/btn_iv_height_problem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ImageView在键盘切换的时候，重绘的问题"
+                android:textAllCaps="false" />
+
         <ImageView
                 android:id="@+id/iv_blur"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="200dp" />
 
         <Button
                 android:onClick="onClick"

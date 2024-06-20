@@ -13,6 +13,19 @@
             android:layout_marginTop="8dp"
             android:orientation="vertical">
 
+        <Button
+                android:id="@+id/btn_test_height_problem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="测试ImageView 宽高的问题" />
+
+        <com.hm.bitmaploadexample.widget.TestImageView
+                android:id="@+id/ivHeightProblem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,9 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" />
 
-        <TextView
+        <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="imageView3" />

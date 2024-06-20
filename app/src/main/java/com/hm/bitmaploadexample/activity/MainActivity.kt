@@ -8,6 +8,7 @@ import com.hm.bitmaploadexample.R
 import com.hm.bitmaploadexample.activity.ImageSizeForMemoryTestActivity.Companion.launch
 import com.hm.bitmaploadexample.activity.sourcecode.GlideRecyclerViewActivity
 import com.hm.bitmaploadexample.activity.sourcecode.GlideSourceCodeActivity
+import com.hm.bitmaploadexample.databinding.ActivityMainBinding
 
 /**
  * 正确使用Handler的方式
@@ -16,14 +17,20 @@ import com.hm.bitmaploadexample.activity.sourcecode.GlideSourceCodeActivity
  */
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onClick(view: View) {
         val id = view.id
         when (id) {
+            R.id.btn_iv_height_problem -> {
+                BitmapHeightProblemTestActivity.launch(this)
+            }
+
             R.id.btn_test_image_size -> {
                 launch(this)
             }

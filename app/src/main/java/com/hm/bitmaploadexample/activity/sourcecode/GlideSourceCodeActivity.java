@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import androidx.annotation.NonNull;
@@ -14,13 +16,13 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.bitmap.DrawableTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.hm.bitmaploadexample.R;
+import com.hm.bitmaploadexample.databinding.ActivityGlideBinding;
 import com.hm.bitmaploadexample.transform.BlurTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
 import com.hm.bitmaploadexample.transform.GlideRoundTransform;
@@ -51,19 +53,24 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
     ImageView imageView14;
     ImageView imageView15;
 
+    private ImageView imageViewHeightProblem;
+
     FutureStudioView futureTudioVIew;
 
     private RequestOptions options;
 
+    private ActivityGlideBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_glide);
+        binding = ActivityGlideBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         findViews();
         options = new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher);
 
-        sourceCodeTest();
+        //sourceCodeTest();
         //glide1();
 //        glide2();
 //        glide3();
@@ -81,6 +88,18 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 //        glideIntoTarget();
 //
 //        useGlideApp();
+
+
+
+        binding.btnTestHeightProblem.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sourceCodeTest();
+            }
+        });
+
+
     }
 
     private void findViews() {
@@ -109,8 +128,8 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
     private void sourceCodeTest() {
         Glide.with(this)
                 .load(Images.imageUrls[1])
-                .transform(new BlurTransformation(this, 15))
-                .into(imageView1);
+                //.transform(new BlurTransformation(this, 15))
+                .into(binding.ivHeightProblem);
     }
 
     /**
@@ -342,7 +361,6 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 //                .load(Images.imageUrls[15])
 //                .miniThumb(50)
 //                .into(imageView15);
-
 
     }
 
