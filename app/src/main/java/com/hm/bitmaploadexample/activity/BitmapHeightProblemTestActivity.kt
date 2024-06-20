@@ -34,26 +34,26 @@ class BitmapHeightProblemTestActivity : AppCompatActivity() {
         binding = ActivityBitmapHeightProblemTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ImmersionBar
-            .with(this)
-            .titleBar(binding.ivClosePage)
-            .keyboardEnable(true)
-            .setOnKeyboardListener { isPopup, _ ->
-                val decorView = window.decorView
-                if (isPopup) {
-                    //软键盘弹出的时候，去掉RecyclerView的图层混合效果
-                    Log.i(
-                        TAG,
-                        "setOnKeyboardListener:软键盘弹起？ isPopup = $isPopup decorView height = ${decorView.height}"
-                    )
-                } else {
-                    Log.i(
-                        TAG,
-                        "setOnKeyboardListener:软键盘弹起？ isPopup = $isPopup decorView height = ${decorView.height}"
-                    )
-                }
-            }
-            .init()
+//        ImmersionBar
+//            .with(this)
+//            .titleBar(binding.ivClosePage)
+//            .keyboardEnable(true)
+//            .setOnKeyboardListener { isPopup, _ ->
+//                val decorView = window.decorView
+//                if (isPopup) {
+//                    //软键盘弹出的时候，去掉RecyclerView的图层混合效果
+//                    Log.i(
+//                        TAG,
+//                        "setOnKeyboardListener:软键盘弹起？ isPopup = $isPopup decorView height = ${decorView.height}"
+//                    )
+//                } else {
+//                    Log.i(
+//                        TAG,
+//                        "setOnKeyboardListener:软键盘弹起？ isPopup = $isPopup decorView height = ${decorView.height}"
+//                    )
+//                }
+//            }
+//            .init()
 
         val url = "https://zmdcharactercdn.zhumengdao.com/0566bcda741e8053f24b3fa3d765beea.png"
         //val url = "https://imgservices-1252317822.image.myqcloud.com/coco/s11152023/bf3b4a97.jzoi4c.jpg"

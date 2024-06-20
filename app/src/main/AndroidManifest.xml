@@ -13,10 +13,17 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
+        <!--android:windowSoftInputMode="adjustNothing",不动，输入框会被遮住-->
+        <!--android:windowSoftInputMode="adjustUnspecified",向上移动-->
+        <!--android:windowSoftInputMode="stateUnchanged",向上移动-->
+        <!--android:windowSoftInputMode="adjustResize",和场景一样-->
         <activity
                 android:name=".activity.BitmapHeightProblemTestActivity"
                 android:screenOrientation="portrait"
-                android:exported="false" />
+                android:exported="false"
+                android:windowSoftInputMode="adjustResize"
+                />
 
         <activity android:name=".activity.ImageSizeForMemoryTestActivity" />
         <activity
