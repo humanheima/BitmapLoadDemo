@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/root_view"
+        tools:context=".activity.BitmapHeightProblemTestActivity">
+
+
+    <com.hm.bitmaploadexample.widget.TestImageView
+            android:id="@+id/iv_big_image"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="800dp" />
+
+    <Button
+            android:id="@+id/btn_height"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_above="@+id/et_input" />
+
+    <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:hint="测试键盘弹起的时候的ImageView高度的问题" />
+
+</RelativeLayout>

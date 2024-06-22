@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.ImageView
+import androidx.constraintlayout.core.widgets.ConstraintWidget
 
 /**
  * Created by p_dmweidu on 2024/6/20
@@ -22,8 +23,10 @@ class TestImageView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        Log.d(TAG, "onMeasure: ")
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        //键盘弹起的时候，就没有走到这里
+        //Log.e(TAG, "onMeasure: measureWidth = $measuredWidth measureHeight = $measuredHeight")
+        Log.e(TAG, "onMeasure: ${Log.getStackTraceString(Throwable())}")
     }
 
     override fun layout(l: Int, t: Int, r: Int, b: Int) {
