@@ -22,13 +22,15 @@
                 android:name=".activity.BitmapHeightProblemTestActivity"
                 android:screenOrientation="portrait"
                 android:exported="false"
-                android:windowSoftInputMode="adjustResize"
-                />
+                android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".activity.ImageSizeForMemoryTestActivity" />
+        <activity
+                android:name=".activity.ImageSizeForMemoryTestActivity"
+                android:exported="false" />
         <activity
                 android:name=".activity.MainActivity"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,13 +39,16 @@
         </activity>
         <activity
                 android:name=".activity.TestActivity"
-                android:screenOrientation="portrait" />
+                android:screenOrientation="portrait"
+                android:exported="false" />
         <activity
                 android:name=".activity.GridViewActivity"
-                android:screenOrientation="portrait" />
+                android:screenOrientation="portrait"
+                android:exported="false" />
         <activity
                 android:name=".activity.GlideActivity"
-                android:screenOrientation="portrait" />
+                android:screenOrientation="portrait"
+                android:exported="false" />
         <activity android:name=".activity.LoadLargeImageActivity" />
         <activity android:name=".activity.LargeImageViewActivity" />
         <activity android:name=".activity.sourcecode.GlideSourceCodeActivity" />

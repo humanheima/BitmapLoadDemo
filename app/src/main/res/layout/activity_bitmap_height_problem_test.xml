@@ -14,7 +14,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="centerCrop"
-            android:layout_height="850dp" />
+            android:layout_height="wrap_content" />
 
     <!--返回按钮-->
     <ImageView

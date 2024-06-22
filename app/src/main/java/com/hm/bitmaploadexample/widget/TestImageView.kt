@@ -29,12 +29,21 @@ class TestImageView @JvmOverloads constructor(
     override fun layout(l: Int, t: Int, r: Int, b: Int) {
         Log.d(TAG, "layout: l=$l t=$t r=$r b=$b")
         super.layout(l, t, r, b)
+
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        Log.d(TAG, "onLayout: changed=$changed left=$left top=$top right=$right bottom=$bottom width=$width height=$height")
-        Log.d(TAG, Log.getStackTraceString(Throwable()))
+        Log.d(
+            TAG,
+            "onLayout: changed=$changed left=$left top=$top right=$right bottom=$bottom width=$width height=$height"
+        )
         super.onLayout(changed, left, top, right, bottom)
+    }
+
+    override fun setFrame(l: Int, t: Int, r: Int, b: Int): Boolean {
+        Log.d(TAG, "setFrame: l=$l t=$t r=$r b=$b")
+        Log.d(TAG, "setFrame: ${Log.getStackTraceString(Throwable())}")
+        return super.setFrame(l, t, r, b)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
