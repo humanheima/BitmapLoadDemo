@@ -94,7 +94,6 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
         binding.btnTestHeightProblem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 sourceCodeTest();
             }
         });

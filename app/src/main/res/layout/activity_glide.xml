@@ -18,12 +18,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="测试ImageView 宽高的问题" />
+                android:text="宽高确定的ImageView" />
 
         <com.hm.bitmaploadexample.widget.TestImageView
                 android:id="@+id/ivHeightProblem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_marginTop="8dp" />
 
         <TextView
