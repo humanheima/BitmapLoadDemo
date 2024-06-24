@@ -62,7 +62,7 @@ public boolean startNext() {
     boolean started = false;
     while(!started && hasNextModelLoader()) {
         //注释2处，开始循环用ModelLoader加载数据
-        ModelLoader < File, ?> modelLoader = modelLoaders.get(modelLoaderIndex++);
+        ModelLoader <File, ?> modelLoader = modelLoaders.get(modelLoaderIndex++);
         //注释3处，构建LoadData
         loadData =
             modelLoader.buildLoadData(
@@ -102,7 +102,7 @@ public LoadData<ByteBuffer> buildLoadData(@NonNull File file, int width, int hei
 
 注释4处，调用 fetcher 的 loadData 方法。先看 ByteBufferFetcher 的 loadData 方法
 
-```
+```java
 @Override
 public void loadData(@NonNull Priority priority, @NonNull DataCallback <?super ByteBuffer> callback) {
     ByteBuffer result;
@@ -120,6 +120,8 @@ public void loadData(@NonNull Priority priority, @NonNull DataCallback <?super B
 }
 ```
 
+到此数据获取到了，需要decode成我们想要的数据类型，比如 Bitmap。
+
 ```java
 @Override
 public void onDataReady(Object data) {
@@ -131,8 +133,7 @@ public void onDataReady(Object data) {
 
 ```java
 @Override
-public void onDataFetcherReady(
-    Key sourceKey, Object data, DataFetcher <? > fetcher, DataSource dataSource, Key attemptedKey) {
+public void onDataFetcherReady(Key sourceKey, Object data, DataFetcher <?> fetcher, DataSource dataSource, Key attemptedKey) {
     this.currentSourceKey = sourceKey;
     this.currentData = data;
     this.currentFetcher = fetcher;
@@ -161,9 +162,8 @@ DecodeJob 的 decodeFromRetrievedData 方法
 ```java
 private void decodeFromRetrievedData() {
     //...
-    Resource < R > resource = null;
+    Resource <R> resource = null;
     try {
-
         //注释1处，解码
         resource = decodeFromData(currentFetcher, currentData, currentDataSource);
     } catch (GlideException e) {
@@ -171,7 +171,7 @@ private void decodeFromRetrievedData() {
         throwables.add(e);
     }
     if (resource != null) {
-        //注释2处，notifyEncodeAndRelease
+        //注释2处，notifyEncodeAndRelease。
         notifyEncodeAndRelease(resource, currentDataSource, isLoadingFromAlternateCacheKey);
     } else {
         runGenerators();
@@ -194,6 +194,7 @@ private <Data> Resource <R> decodeFromData(
             return null;
         }
         long startTime = LogTime.getLogTime();
+        //注释1处，调用 decodeFromFetcher 方法
         Resource <R> result = decodeFromFetcher(data, dataSource);
         if (Log.isLoggable(TAG, Log.VERBOSE)) {
             logWithTimeAndKey("Decoded result " + result, startTime);
@@ -205,6 +206,7 @@ private <Data> Resource <R> decodeFromData(
 }
 ```
 
+DecodeJob 的 decodeFromFetcher 方法
 
 ```java
 private <Data> Resource <R> decodeFromFetcher(Data data, DataSource dataSource) throws GlideException {
@@ -215,18 +217,18 @@ private <Data> Resource <R> decodeFromFetcher(Data data, DataSource dataSource) 
 }
 ```
 
-注释1处，返回的path 总共有3个
+注释1处，返回的path包含3个 DecodePath 对象。
 
 
-第一个path：包含 ByteBufferGifDecoder
+第一个DecodePath ：包含 ByteBufferGifDecoder
 
 DecodePath{ dataClass=class java.nio.DirectByteBuffer, decoders=[com.bumptech.glide.load.resource.gif.ByteBufferGifDecoder@f2c14b7], transcoder=com.bumptech.glide.load.resource.transcode.UnitTranscoder@9ec424}
 
-第二个path包含：ByteBufferBitmapDecoder，VideoDecoder
+第二个DecodePath包含：ByteBufferBitmapDecoder，VideoDecoder
 
 DecodePath{ dataClass=class java.nio.DirectByteBuffer, decoders=[com.bumptech.glide.load.resource.bitmap.ByteBufferBitmapDecoder@b34ab8d, com.bumptech.glide.load.resource.bitmap.VideoDecoder@dc03142], transcoder=com.bumptech.glide.load.resource.transcode.BitmapDrawableTranscoder@4e34553}
 
-第3个path包含：BitmapDrawableDecoder
+第3个DecodePath包含：BitmapDrawableDecoder
 
 DecodePath{ dataClass=class java.nio.DirectByteBuffer, decoders=[com.bumptech.glide.load.resource.bitmap.BitmapDrawableDecoder@515fe90, com.bumptech.glide.load.resource.bitmap.BitmapDrawableDecoder@14d7389], transcoder=com.bumptech.glide.load.resource.transcode.UnitTranscoder@9ec424}
 
@@ -276,7 +278,7 @@ private Resource <Transcode> loadWithExceptionList(DataRewinder <Data> rewinder,
     int width, int height, DecodePath.DecodeCallback <ResourceType> decodeCallback, List <Throwable> exceptions) throws GlideException {
     Resource <Transcode> result = null;
     //noinspection ForLoopReplaceableByForEach to improve perf
-    //注释1处，总共有3个path
+    //注释1处，总共有3个 DecodePath
     for(int i = 0, size = decodePaths.size(); i < size; i++) {
         DecodePath <Data, ResourceType, Transcode> path = decodePaths.get(i);
         try {
@@ -298,23 +300,17 @@ private Resource <Transcode> loadWithExceptionList(DataRewinder <Data> rewinder,
 ```
 注释1处，总共有3个 DecodePath 。 
 
-第一个 DecodePath 的 ByteBufferGifDecoder 无法解析我们这个文件，抛出异常：
+第一个 DecodePath 的 ByteBufferGifDecoder 无法解析我们这个文件，抛出异常：`Failed DecodePath{DirectByteBuffer->GifDrawable->Drawable}` 。
 
-`Failed DecodePath{DirectByteBuffer->GifDrawable->Drawable}`
-
-第二个path
-
-DecodePath 的 decode 方法
+第二个 DecodePath 的 decode 方法
 
 ```java
-public Resource<Transcode> decode(
-      DataRewinder<DataType> rewinder,
-      int width,
+public Resource<Transcode> decode( DataRewinder<DataType> rewinder, int width,
       int height,
       @NonNull Options options,
       DecodeCallback<ResourceType> callback)
       throws GlideException {
-    //注释1处
+    //注释1处，调用 DecodePath 的 decodeResource 方法
     Resource<ResourceType> decoded = decodeResource(rewinder, width, height, options);
     //注释2处
     Resource<ResourceType> transformed = callback.onResourceDecoded(decoded);
@@ -323,9 +319,11 @@ public Resource<Transcode> decode(
 }
 ```
 
+注释1处，调用 DecodePath 的 decodeResource 方法
+
 ```java
 @NonNull
-  private Resource<ResourceType> decodeResource(
+private Resource<ResourceType> decodeResource(
       DataRewinder<DataType> rewinder, int width, int height, @NonNull Options options)
       throws GlideException {
     List<Throwable> exceptions = Preconditions.checkNotNull(listPool.acquire());
@@ -335,7 +333,6 @@ public Resource<Transcode> decode(
       listPool.release(exceptions);
     }
 }
-
 ```
 
 DecodePath 的 decodeResourceWithList 方法
@@ -347,14 +344,14 @@ private Resource <ResourceType> decodeResourceWithList(DataRewinder <DataType> r
     @NonNull Options options, List <Throwable> exceptions)throws GlideException {
     Resource < ResourceType > result = null;
     //noinspection ForLoopReplaceableByForEach to improve perf
+    //在我们的例子中有两个ResourceDecoder，第一个ByteBufferBitmapDecoder 是可以解析的
     for(int i = 0, size = decoders.size(); i < size; i++) {
         ResourceDecoder <DataType, ResourceType> decoder = decoders.get(i);
         try {
             DataType data = rewinder.rewindAndGet();
             if(decoder.handles(data, options)) {
-                //注释1处，第二个path的ByteBufferBitmapDecoder是可以解析的
                 data = rewinder.rewindAndGet();
-                //注释2处，
+                //注释1处，ByteBufferBitmapDecoder是可以解析的
                 result = decoder.decode(data, width, height, options);
             }
             // Some decoders throw unexpectedly. If they do, we shouldn't fail the entire load path, but
@@ -387,6 +384,9 @@ public Resource<Bitmap> decode(@NonNull ByteBuffer source, int width, int height
     return downsampler.decode(is, width, height, options);
 }
 ```
+
+ByteBufferBitmapDecoder 的 decode 方法，返回了一个 `Resource<Bitmap>` 对象。
+
 
 Downsampler 的 decode 方法
 
@@ -603,11 +603,11 @@ private Bitmap decodeFromWrappedStreams(
 }
 ```
 
-回到 DecodePath 的 decodeResourceWithList 方法注释2处，此时解析出来，result 是一个 BitmapResource 对象。
+回到 DecodePath 的 decodeResourceWithList 方法注释1处，此时解析出来，result 是一个  `Resource<Bitmap>` 对象。
 
-然后回到DecodePath 的 decode 方法注释2处。会回到 DecodeJob 的onResourceDecoded方法。
+然后回到 DecodePath 的 decode 方法注释2处。会回到 DecodeJob 的onResourceDecoded方法。
 
-DecodeJob 的onResourceDecoded方法。
+DecodeJob 的 onResourceDecoded 方法。
 
 ```java
 @NonNull
@@ -649,7 +649,7 @@ public Resource<Z> onResourceDecoded(@NonNull Resource<Z> decoded) {
 
     Resource<Z> result = transformed;
     boolean isFromAlternateCacheKey = !decodeHelper.isSourceKey(currentSourceKey);
-    //从缓存取出来的，并且没有被 transform，这里不能缓存了。
+    //注释1处，貌似isFromAlternateCacheKey这个值一直是false，没法进到这if条件
     if (diskCacheStrategy.isResourceCacheable(
         isFromAlternateCacheKey, dataSource, encodeStrategy)) {
       if (encoder == null) {
@@ -796,7 +796,7 @@ public Resource<BitmapDrawable> transcode(
 }
 ```
 
-回到 LoadPath 的 loadWithExceptionList 方法的注释1处。我们使用第二个path的ByteBufferBitmapDecoder解析出了结果。
+回到 LoadPath 的 loadWithExceptionList 方法的注释1处。我们使用第二个DecodePath的ByteBufferBitmapDecoder解析出了结果。
 
 然后回到 DecodeJob 的 runLoadPath 方法的注释2处。
 
@@ -805,6 +805,45 @@ public Resource<BitmapDrawable> transcode(
 然后回到 DecodeJob 的 decodeFromData 方法。
 
 然后回到 DecodeJob 的 decodeFromRetrievedData 方法。注释2处，notifyEncodeAndRelease。
+
+DecodeJob 的 notifyEncodeAndRelease 方法
+
+```java
+private void notifyEncodeAndRelease(Resource <R> resource, DataSource dataSource, boolean isLoadedFromAlternateCacheKey) {
+
+    if(resource instanceof Initializable) {
+        ((Initializable) resource).initialize();
+    }
+    Resource <R> result = resource;
+    LockedResource <R> lockedResource = null;
+    if(deferredEncodeManager.hasResourceToEncode()) {
+        lockedResource = LockedResource.obtain(resource);
+        result = lockedResource;
+    }
+    //注释1处，通知加载成功
+    notifyComplete(result, dataSource, isLoadedFromAlternateCacheKey);
+    stage = Stage.ENCODE;
+    try {
+        if(deferredEncodeManager.hasResourceToEncode()) {
+            //注释2处，如果在这个过程中，产生了中间对象需要缓存到磁盘，例如应用了transform的，或者downsample的。这块没细看。
+            deferredEncodeManager.encode(diskCacheProvider, options);
+        }
+    } finally {
+        if(lockedResource != null) {
+            lockedResource.unlock();
+        }
+    }
+    // Call onEncodeComplete outside the finally block so that it's not called if the encode process
+    // throws.
+    onEncodeComplete();
+}
+```
+
+
+注释2处，如果在这个过程中，产生了中间对象需要缓存到磁盘，例如应用了transform的，或者downsample的。这块没细看。在 DecodeJob 的 onResourceDecoded 方法注释1处，貌似isFromAlternateCacheKey这个值一直是false，没法进到这if条件中。所以不存在需要缓存的中间对象。 后面再研究研究。
+
+
+
 
 
 
