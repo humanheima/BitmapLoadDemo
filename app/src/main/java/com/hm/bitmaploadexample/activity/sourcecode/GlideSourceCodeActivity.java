@@ -19,10 +19,9 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.hm.bitmaploadexample.R;
-import com.hm.bitmaploadexample.databinding.ActivityGlideBinding;
+import com.hm.bitmaploadexample.databinding.ActivityGlideSourceCodeBinding;
 import com.hm.bitmaploadexample.transform.BlurTransformation;
 import com.hm.bitmaploadexample.transform.GlideRotateTransform;
 import com.hm.bitmaploadexample.transform.GlideRoundTransform;
@@ -53,18 +52,16 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
     ImageView imageView14;
     ImageView imageView15;
 
-    private ImageView imageViewHeightProblem;
-
     FutureStudioView futureTudioVIew;
 
     private RequestOptions options;
 
-    private ActivityGlideBinding binding;
+    private ActivityGlideSourceCodeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityGlideBinding.inflate(getLayoutInflater());
+        binding = ActivityGlideSourceCodeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         findViews();
@@ -89,8 +86,6 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 //
 //        useGlideApp();
 
-
-
         binding.btnTestHeightProblem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +93,15 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnSourceCode.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                glide1();
+            }
+
+
+        });
 
     }
 
@@ -129,6 +133,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 .load(Images.imageUrls[1])
                 //.transform(new BlurTransformation(this, 15))
                 .into(binding.ivHeightProblem);
+
     }
 
     /**
@@ -143,7 +148,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 // .asGif()
                 //.apply(options)
                 //.transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView1);
+                .into(binding.imageView1);
         //从资源文件加载
       /*  Glide.with(this).load(R.drawable.me)
                 .into(imageView1);*/
@@ -273,18 +278,6 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 });
     }
 
-    private void glide9() {
-        ViewTarget<FutureStudioView, Drawable> viewTarget = new ViewTarget<FutureStudioView, Drawable>(
-                futureTudioVIew) {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                futureTudioVIew.setImage(resource);
-            }
-        };
-        Glide.with(this)
-                .load(Images.imageUrls[12])
-                .into(viewTarget);
-    }
 
     /**
      * 自定义变换
