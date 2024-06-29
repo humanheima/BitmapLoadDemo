@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (id) {
             R.id.btn_iv_height_problem -> {
                 BitmapHeightProblemTestActivity.launch(this)
+                //SoftKeyboardActivity.launch(this)
             }
 
             R.id.btn_test_image_size -> {

@@ -36,6 +36,7 @@ class BitmapHeightProblemTestActivity : AppCompatActivity() {
 
         //和在xml中设置  android:windowSoftInputMode="adjustResize"
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         binding = ActivityBitmapHeightProblemTestBinding.inflate(layoutInflater)
         setContentView(binding.root)

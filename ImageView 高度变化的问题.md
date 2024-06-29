@@ -1,7 +1,7 @@
 ### 使用约束布局
 
 ```kotlin
-//和在xml中设置  android:windowSoftInputMode="adjustResize"
+//和在xml中设置  android:windowSoftInputMode="adjustResize" 效果是一样的。
 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
 ```
@@ -68,7 +68,7 @@ public void layout(int l, int t, int r, int b){
 注意，在这种场景下：键盘弹起的时候，DecorView 的top坐标，bottom坐标和 height并没有改变。
 
 
-2. 键盘弹起的时候，最外层的约束布局的top坐标没有发生变化，还是0， bottom坐标 已经发生变化了，变成了 1799。但是大ImageView的bottom = 2800，没有发生变化。大 ImageView的约束是 `app:layout_constraintTop_toTopOf="parent"` 。
+2. 键盘弹起的时候，最外层的约束布局的top坐标没有发生变化，还是0， bottom坐标已经发生变化了，变成了 1799。但是大ImageView的bottom = 2800，没有发生变化。大 ImageView的约束是 `app:layout_constraintTop_toTopOf="parent"` 。
 
 ```java
 17:08:10.705 BitmapHe...blemTest  I  setOnKeyboardListener: decorView height = 3120 top = 0 bottom = 3120
@@ -163,17 +163,16 @@ int t = widget.getY();
 ```
 
 
-### 其他
+### 其他测试现象
 
 1. 如果ImageView 的 高度依赖 外层约束布局到的bottom坐标，那么 ImageView也会跟着向上移动。
 
 ```
- app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintBottom_toBottomOf="parent"
 android:layout_height="0dp"
 ```
 
 2. 如果最外层的约束布局改为RelativeLayout，ImageView也会向上移动。
-3. 
 
 
 

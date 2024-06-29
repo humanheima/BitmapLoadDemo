@@ -52,6 +52,8 @@
         <activity android:name=".activity.LargeImageViewActivity" />
         <activity android:name=".activity.sourcecode.GlideSourceCodeActivity" />
         <activity android:name=".activity.sourcecode.GlideRecyclerViewActivity" />
+        <activity android:name=".activity.SoftKeyboardActivity"
+                android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
