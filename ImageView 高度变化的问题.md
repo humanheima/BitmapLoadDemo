@@ -153,9 +153,11 @@ protected void onLayout(boolean changed, int left, int top, int right, int botto
 
 注释3处，child 调用 layout 布局。
 
-注意，键盘弹起收起的时候，3个子View，EditText top 坐标发生了改变。但是 TestImageView 的top 坐标没有变。
+注意，键盘弹起收起的时候，3个子View，底部 EditText ，button 坐标发生了改变。但是 TestImageView 的坐标没有变。
 
-主要是在layout的时候，top坐标发生了变化。哪里改变了top坐标的值呢，就是有 `PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT` 标记位的时候，真正layout之前调用 onMeasure，改变了 l,t,r,b 坐标 。
+主要是在layout的时候，就是有 `PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT` 标记位的时候，真正layout之前调用 onMeasure，改变了 l,t,r,b 坐标 。
+
+在我们的例子中t坐标一直是0，没有发生变化。b 坐标发生了变化。会导致底部 EditText ，button 约束发生改变。重新布局。
 
 ```java
 

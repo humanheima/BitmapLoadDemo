@@ -4,18 +4,18 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.util.Log
-import android.widget.ImageView
+import android.widget.EditText
 
 /**
  * Created by p_dmweidu on 2024/6/20
  * Desc: 测试 ImageView在键盘弹起时，有时候会重新布局，有时候不会重新布局的问题
  */
-class TestImageView @JvmOverloads constructor(
+class TestEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : ImageView(context, attrs) {
+) : EditText(context, attrs) {
 
 
-    private val TAG = "TestImageView"
+    private val TAG = "TestEditText"
 
     override fun requestLayout() {
         Log.d(TAG, "requestLayout: ")
@@ -26,11 +26,11 @@ class TestImageView @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         //键盘弹起的时候，就没有走到这里
         //Log.e(TAG, "onMeasure: measureWidth = $measuredWidth measureHeight = $measuredHeight")
-        Log.e(TAG, "onMeasure: ${Log.getStackTraceString(Throwable())}")
+        //Log.e(TAG, "onMeasure: ${Log.getStackTraceString(Throwable())}")
     }
 
     override fun layout(l: Int, t: Int, r: Int, b: Int) {
-        Log.d(TAG, "layout: l=$l t=$t r=$r b=$b")
+        //Log.d(TAG, "layout: l=$l t=$t r=$r b=$b")
         super.layout(l, t, r, b)
 
     }
@@ -44,8 +44,8 @@ class TestImageView @JvmOverloads constructor(
     }
 
     override fun setFrame(l: Int, t: Int, r: Int, b: Int): Boolean {
-        Log.d(TAG, "setFrame: l=$l t=$t r=$r b=$b")
-        Log.d(TAG, "setFrame: ${Log.getStackTraceString(Throwable())}")
+        //Log.d(TAG, "setFrame: l=$l t=$t r=$r b=$b")
+        //Log.d(TAG, "setFrame: ${Log.getStackTraceString(Throwable())}")
         return super.setFrame(l, t, r, b)
     }
 
