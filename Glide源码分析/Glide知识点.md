@@ -123,3 +123,57 @@ public synchronized void put(Bitmap bitmap) {
     evict();
 }
 ```
+
+### Transform后的Bitmap会加入缓存吗
+
+取决于使用的 DiskCacheStrategy，默认使用的是  DiskCacheStrategy.AUTOMATIC ，不会缓存。如果使用 DiskCacheStrategy.ALL 则缓存。
+
+
+```java
+/**
+ * Caches remote data with both {@link #DATA} and {@link #RESOURCE}, and local data with {@link
+ * #RESOURCE} only.
+ */
+public static final DiskCacheStrategy ALL =
+   
+    new DiskCacheStrategy() {
+    
+        @Override
+        public boolean isDataCacheable(DataSource dataSource) {
+            return dataSource == DataSource.REMOTE;
+        }
+
+
+        /**
+         * Returns true if this request should cache the final transformed resource.
+         *
+         * @param isFromAlternateCacheKey {@code true} if the resource we've decoded was loaded using an
+         *     alternative, rather than the primary, cache key.
+         * @param dataSource Indicates where the data used to decode the resource was originally
+         *     retrieved.
+         * @param encodeStrategy The {@link EncodeStrategy} the {@link
+         *     com.bumptech.glide.load.ResourceEncoder} will use to encode the resource.
+         */
+        @Override
+        public boolean isResourceCacheable(
+            boolean isFromAlternateCacheKey, DataSource dataSource, EncodeStrategy encodeStrategy) {
+            // 注释1处，会缓存 tranformed 的Bitmap
+            return dataSource != DataSource.RESOURCE_DISK_CACHE && dataSource != DataSource.MEMORY_CACHE;
+        }
+
+        @Override
+        public boolean decodeCachedResource() {
+            return true;
+        }
+
+        @Override
+        public boolean decodeCachedData() {
+            return true;
+        }
+    };
+
+```
+
+
+
+

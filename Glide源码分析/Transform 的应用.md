@@ -104,6 +104,8 @@ private void sourceCodeTest() {
 
       //这里没有做什么修改
       LockedResource<Z> lockedResult = LockedResource.obtain(transformed);
+      //注释3处，如果 DiskCacheStrategy 允许缓存transfrom 的 结果，则创建一个DeferredEncodeManager 对象。
+      //然后，在 DecodeJob 类的 notifyEncodeAndRelease 方法中，会调用 DeferredEncodeManager 的 encode 方法。缓存到磁盘。
       deferredEncodeManager.init(key, encoder, lockedResult);
       result = lockedResult;
     }
@@ -111,3 +113,4 @@ private void sourceCodeTest() {
     return result;
   }
 ```
+

@@ -65,7 +65,8 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         findViews();
-        options = new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher);
+//        options = new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher)
+//        .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         //sourceCodeTest();
         //glide1();
@@ -131,6 +132,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
     private void sourceCodeTest() {
         Glide.with(this)
                 .load(Images.imageUrls[1])
+                //.diskCacheStrategy(DiskCacheStrategy.ALL)
                 //.transform(new BlurTransformation(this, 15))
                 .into(binding.ivHeightProblem);
 
