@@ -1,3 +1,14 @@
+### 整个加载流程
+
+比如一个数据类型A 是一个网络上的图片地址 ：`https://zmdcharactercdn.zhumengdao.com/0566bcda741e8053f24b3fa3d765beea.png`
+
+数据A -> ModelLoader 把 A 转化后的数据类型B -> DataFetcher 从 数据 B 中读取数据 -> DecodePath 把读取的数据解码成 Bitmap (这个过程涉及 transform，transcoder，downsample 等操作) 。
+
+比如 StringLoader，就是把一个String，比如 `https://zmdcharactercdn.zhumengdao.com/0566bcda741e8053f24b3fa3d765beea.png` ，
+转化成一个数据类型，比如 `InputStream`，然后 DataFetcher，比如说 `OkHttpStreamFetcher`，就从这个流里面读取数据。然后 `DecodePath` 把读取的数据解码成 Bitmap。
+
+RegistryFactory 添加了所有的 Loader
+
 ### Bitmap 是怎么加入内存缓存的。
 
 DecodeJob 的 onResourceDecoded 方法。
@@ -175,5 +186,15 @@ public static final DiskCacheStrategy ALL =
 ```
 
 
+### 图片加载流程
+
+1. 先从内存缓存中查找
+2. 从 降低采样率/应用了transform 的磁盘缓存文件中查找 ResourceCacheGenerator
+3. 从 包含原始资源数据的磁盘缓存文件中查找 DataCacheGenerator
+4. 加载网络资源 SourceGenerator
 
 
+
+
+
+### 生命周期感知相关

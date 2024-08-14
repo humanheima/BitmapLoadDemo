@@ -1,10 +1,16 @@
 
-DataFetcherGenerator: 使用已注册的 ModelLoader 实例和一个模型(model)来生成一系列的 DataFetcher 实例。类型有：
+### 本盘文章主要是 Decode 部分相关，待完善。
+# DataFetcherGenerator
+
+使用已注册的 ModelLoader 实例和一个模型(model)来生成一系列的 DataFetcher 实例。类型有：
+
+* DataCacheGenerator：从包含原始的未修改的资源数据的**缓存文件中**生成 DataFetcher 实例。
+* ResourceCacheGenerator：从包含已降低采样率/已变换(downsampled/transformed)的资源数据的**缓存文件中**生成 DataFetcher 实例。
+* SourceGenerator：使用已注册的 ModelLoader 实例和一个模型(model)，从原始资源数据生成 DataFetcher 实例。例如，原始资源数据就是网络上的一张图片。根据磁盘缓存策略，资源数据可能会先写入磁盘缓存文件，然后从磁盘缓存文件中读取，而不是直接返回。
 
 
 
-
-ModelLoader
+# ModelLoader
 
 ```
 一个用于将任意复杂的数据模型转换为具体数据类型的工厂接口,
@@ -15,6 +21,10 @@ ModelLoader
 
 2. 允许将模型与视图的尺寸组合,以获取特定大小的资源。
 ```
+
+比如 StringLoader，就是把一个String，比如 `https://zmdcharactercdn.zhumengdao.com/0566bcda741e8053f24b3fa3d765beea.png` ，
+转化成一个数据类型，比如 `InputStream`，然后 DataFetcher，比如说 `OkHttpStreamFetcher`，就从这个流里面读取数据。然后 `DecodePath` 把读取的数据解码成 Bitmap。
+
 
 * 类型有
 
@@ -408,6 +418,7 @@ options: `Options{values={Option{key='com.bumptech.glide.load.resource.bitmap.Do
 注释1处，构建了一个 ImageReader，然后调用重载的 decode 方法。
 
 ```java
+
 private Resource <Bitmap> decode(ImageReader imageReader, int requestedWidth, int requestedHeight, Options options,
     DecodeCallbacks callbacks)
 throws IOException {
@@ -634,7 +645,7 @@ public Resource<Z> onResourceDecoded(@NonNull Resource<Z> decoded) {
     // TODO: Make this the responsibility of the Transformation.
     if (!decoded.equals(transformed)) {
         //有变换的话，把decoded 回收
-      decoded.recycle();
+        decoded.recycle();
     }
 
     final EncodeStrategy encodeStrategy;
@@ -840,7 +851,8 @@ private void notifyEncodeAndRelease(Resource <R> resource, DataSource dataSource
 ```
 
 
-注释2处，如果在这个过程中，产生了中间对象需要缓存到磁盘，例如应用了transform的，或者downsample的。这块没细看。在 DecodeJob 的 onResourceDecoded 方法注释1处，貌似isFromAlternateCacheKey这个值一直是false，没法进到这if条件中。所以不存在需要缓存的中间对象。 后面再研究研究。
+注释2处，如果在这个过程中，产生了中间对象需要缓存到磁盘，例如应用了transform的，或者downsample(向下采样的)的。这块没细看。在 DecodeJob 的 onResourceDecoded 方法注释1处，貌似isFromAlternateCacheKey这个值一直是false，没法进到这if条件中。所以不存在需要缓存的中间对象。 后面再研究研究。
+不同的磁盘缓存策略，有不同的实现。如果使用 `DiskCacheStrategy#ALL`。则会全部缓存。
 
 
 
