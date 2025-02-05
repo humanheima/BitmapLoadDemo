@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
@@ -135,6 +137,14 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 //.diskCacheStrategy(DiskCacheStrategy.ALL)
                 //.transform(new BlurTransformation(this, 15))
                 .into(binding.ivHeightProblem);
+
+        binding.ivHeightProblem.post(new Runnable() {
+
+            @Override
+            public void run() {
+                Log.e(TAG, "run: " + binding.ivHeightProblem.getWidth() + " , " + binding.ivHeightProblem.getHeight());
+            }
+        });
 
     }
 
@@ -268,7 +278,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource,
-                            @Nullable Transition<? super Bitmap> transition) {
+                                                @Nullable Transition<? super Bitmap> transition) {
                         Log.i(TAG, "glide8 CustomViewTarget onResourceReady: ");
                         imageView8.setImageBitmap(resource);
                     }
@@ -336,7 +346,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 .into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource,
-                            @Nullable Transition<? super Drawable> transition) {
+                                                @Nullable Transition<? super Drawable> transition) {
                         Log.i(TAG, "glideIntoTarget onResourceReady: ");
                         imageView14.setImageDrawable(resource);
                     }

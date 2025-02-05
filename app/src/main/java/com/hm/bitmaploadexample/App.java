@@ -2,6 +2,7 @@ package com.hm.bitmaploadexample;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Created by Administrator on 2017/1/5.

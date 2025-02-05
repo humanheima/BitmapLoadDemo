@@ -616,7 +616,7 @@ private Bitmap decodeFromWrappedStreams(
 
 回到 DecodePath 的 decodeResourceWithList 方法注释1处，此时解析出来，result 是一个  `Resource<Bitmap>` 对象。
 
-然后回到 DecodePath 的 decode 方法注释2处。会回到 DecodeJob 的onResourceDecoded方法。
+然后回到 DecodePath 的 decode 方法注释2处。会回到 DecodeJob 的 onResourceDecoded 方法。
 
 DecodeJob 的 onResourceDecoded 方法。
 

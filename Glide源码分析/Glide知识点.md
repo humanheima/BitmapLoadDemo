@@ -11,7 +11,9 @@ RegistryFactory 添加了所有的 Loader
 
 ### Bitmap 是怎么加入内存缓存的。
 
-DecodeJob 的 onResourceDecoded 方法。
+1. 在传入的Context 生命周期结束的时候。
+2. 内存紧张的时候，会自动清理。这个没验证过。
+3. 在 DecodeJob 的 onResourceDecoded 方法。
 
 ```java
 @Synthetic
@@ -203,3 +205,7 @@ Glide.with(context).load(url).into(imageView)
 
 通过传递的 context 获取到 Lifecycle，然后 Lifecycle 添加了一个 LifecycleListener(一个RequestManager对象)，在生命周期onStop的时候，停止加载。
 在 onStart 的时候，开始加载，或者 resume 加载。
+
+### Glide4 的官方文档
+
+[资源重用](https://muyangmin.github.io/glide-docs-cn/doc/resourcereuse.html)
