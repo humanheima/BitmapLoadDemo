@@ -210,6 +210,39 @@ Glide.with(context).load(url).into(imageView)
 
 RequestOptions 类来在多个请求之间共享
 
+如果你想让你的应用的不同部分之间共享相同的加载选项，你也可以初始化一个新的 RequestOptions 对象，并在每次加载时通过 apply() 方法传入这个对象：
+
+```java
+RequestOptions cropOptions = new RequestOptions().centerCrop(context);
+
+Glide.with(fragment)
+.load(url)
+.apply(cropOptions)
+.into(imageView);
+
+```
+apply() 方法可以被调用多次，因此 RequestOption 可以被组合使用。如果 RequestOptions 对象之间存在相互冲突的设置，那么只有最后一个被应用的 RequestOptions 会生效。
+
+
+### 在失败时开始新的请求
+
+从 Glide 4.3.0 开始，你现在可以使用 error API 来指定一个 RequestBuilder，以在主请求失败时开始一次新的加载。例如，在请求 primaryUrl 失败后加载 fallbackUrl：
+
+```java
+Glide.with(fragment)
+.load(primaryUrl)
+.error(Glide.with(fragment)
+.load(fallbackUrl))
+.into(imageView);
+```
+
+如果主请求成功完成，这个error RequestBuilder 将不会被启动。如果你同时指定了一个 thumbnail() 和一个 error() RequestBuilder，则这个后备的 RequestBuilder 将在主请求失败时启动，即使缩略图请求成功也是如此。
+
+### ImageView的自动变换
+在Glide中，当你为一个 ImageView 开始加载时，Glide可能会自动应用 FitCenter 或 CenterCrop ，这取决于view的 ScaleType 。如果 scaleType 是 CENTER_CROP , Glide 将会自动应用 CenterCrop 变换。如果 scaleType 为 FIT_CENTER 或 CENTER_INSIDE ，Glide会自动使用 FitCenter 变换。
+
+当然，你总有权利覆写默认的变换，只需要一个带有 Transformation 集合的 RequestOptions 即可。另外，你也可以通过使用 dontTransform() 确保不会自动应用任何变换。
+
 ### Glide4 的官方文档
 
 [资源重用](https://muyangmin.github.io/glide-docs-cn/doc/resourcereuse.html)
