@@ -40,12 +40,10 @@ dependencies {
     //glide use okhttp
     implementation "com.github.bumptech.glide:okhttp3-integration:${rootProject.ext.glide_version}"
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
-    implementation 'jp.wasabeef:glide-transformations:2.0.2'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
     //load large image
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation "com.gyf.immersionbar:immersionbar:3.0.0"
 
     //implementation 'com.android.tools.build:gradle:7.4.2'
 

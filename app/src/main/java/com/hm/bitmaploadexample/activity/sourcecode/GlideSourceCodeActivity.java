@@ -18,6 +18,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
@@ -35,7 +36,7 @@ import com.hm.bitmaploadexample.widget.FutureStudioView;
  */
 public class GlideSourceCodeActivity extends AppCompatActivity {
 
-    private static final String TAG = "GlideActivity";
+    private static final String TAG = "GlideSourceCodeActivity";
 
     ImageView imageView1;
     ScrollView activityGlide;
@@ -103,8 +104,9 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 glide1();
             }
 
-
         });
+
+        useInBackgroundThread();
 
     }
 
@@ -145,6 +147,41 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 Log.e(TAG, "run: " + binding.ivHeightProblem.getWidth() + " , " + binding.ivHeightProblem.getHeight());
             }
         });
+
+    }
+
+    /**
+     * 在后台线程使用
+     */
+    private void useInBackgroundThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                FutureTarget<Bitmap> futureTarget =
+                        Glide.with(GlideSourceCodeActivity.this)
+                                .asBitmap()
+                                .load(Images.imageUrls[1])
+                                //.submit(width, height);//可以指定宽高
+                                .submit();
+                //get 方法必须在子线程调用
+                try {
+                    Bitmap bitmap = futureTarget.get();
+                    Log.d(TAG, "run: bitmap = " + bitmap);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            binding.ivHeightProblem.setImageBitmap(bitmap);
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "run: error " + e.getMessage());
+                }
+            }
+        }).start();
+
+        // Do something with the Bitmap and then when you're done with it:
+        //Glide.with(this).clear(futureTarget);
 
     }
 
@@ -290,7 +327,6 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                 });
     }
 
-
     /**
      * 自定义变换
      */
@@ -304,7 +340,6 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
                         new FitCenter())))//应用多个变换*/
                 .into(imageView10);
     }
-
 
     /**
      * 圆形变换
@@ -367,6 +402,5 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 //                .into(imageView15);
 
     }
-
 
 }
