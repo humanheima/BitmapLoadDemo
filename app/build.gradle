@@ -43,7 +43,10 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     //load large image
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0'
+    // Android 特定的扩展和辅助方法
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
 
     //implementation 'com.android.tools.build:gradle:7.4.2'
 
