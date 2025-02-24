@@ -63,6 +63,10 @@ public class LargeImageViewActivity extends AppCompatActivity {
                         scaleImageView.setMinimumDpi(160);
                         scaleImageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_INSIDE);
                         scaleImageView.setImage(ImageSource.uri(Uri.fromFile(resource)));
+                        //scaleImageView.setDoubleTapZoomScale(4f);
+
+
+                        //scaleImageView.setZoomEnabled(true);
                     }
                 });
                /* .into(new FileTarget() {

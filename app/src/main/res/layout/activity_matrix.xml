@@ -17,6 +17,7 @@
         android:id="@+id/iv_original"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:background="#103CC9"
         android:scaleType="matrix" />
 
     <TextView
@@ -28,6 +29,7 @@
         android:id="@+id/iv_transformed"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:background="#103CC9"
         android:scaleType="matrix" />
 
     <Button

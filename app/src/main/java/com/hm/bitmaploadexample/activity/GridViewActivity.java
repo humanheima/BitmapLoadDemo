@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.hm.bitmaploadexample.R;
 import com.hm.bitmaploadexample.adapter.ImageAdapter;
 import com.hm.bitmaploadexample.utils.CacheUtil;
@@ -15,10 +16,10 @@ import com.hm.bitmaploadexample.utils.Images;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 public class GridViewActivity extends AppCompatActivity {
 
@@ -38,13 +39,10 @@ public class GridViewActivity extends AppCompatActivity {
         timer.schedule(timerTask, 2000, 5000);
         initData();
         setAdapter();
-       /* Picasso.with(this).load("").into(new ImageView(this));*/
     }
 
     private void initData() {
-        for (String url : Images.imageUrls) {
-            mUrList.add(url);
-        }
+        Collections.addAll(mUrList, Images.imageUrls);
     }
 
     private void setAdapter() {
