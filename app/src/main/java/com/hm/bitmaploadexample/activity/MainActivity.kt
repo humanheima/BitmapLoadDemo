@@ -1,6 +1,7 @@
 package com.hm.bitmaploadexample.activity
 
 import android.content.Intent
+import android.graphics.Matrix
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         val id = view.id
         when (id) {
+            R.id.btn_test_matrix -> {
+                MatrixActivity.launch(this)
+            }
+
             R.id.btn_iv_height_problem -> {
                 BitmapHeightProblemTestActivity.launch(this)
                 //SoftKeyboardActivity.launch(this)

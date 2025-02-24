@@ -203,8 +203,73 @@ public static final DiskCacheStrategy ALL =
 
 Glide.with(context).load(url).into(imageView)
 
-通过传递的 context 获取到 Lifecycle，然后 Lifecycle 添加了一个 LifecycleListener(一个RequestManager对象)，在生命周期onStop的时候，停止加载。
+通过传递的 context 获取到 Lifecycle，然后 Lifecycle 添加了一个 LifecycleListener(一个 RequestManager 对象)，在生命周期onStop的时候，停止加载。
 在 onStart 的时候，开始加载，或者 resume 加载。
+
+RequestManager 的 onStop 方法
+```java
+/**
+   * Lifecycle callback that unregisters for connectivity events (if the
+   * android.permission.ACCESS_NETWORK_STATE permission is present) and pauses in progress loads
+   * and clears all resources if {@link #clearOnStop()} is called.
+   */
+  @Override
+  public synchronized void onStop() {
+    targetTracker.onStop();
+    if (clearOnStop) {
+        //清除
+      clearRequests();
+    } else {
+        //或者暂停
+      pauseRequests();
+    }
+  }
+
+  //调用 RequestTracker 的 pauseRequests 方法
+  public synchronized void pauseRequests() {
+      requestTracker.pauseRequests();
+  }
+
+```
+
+//RequestTracker 的 pauseRequests 方法 和 resumeRequests 方法
+
+```java
+
+/** Stops any in progress requests. */
+public void pauseRequests() {
+    isPaused = true;
+    for (Request request : Util.getSnapshot(requests)) {
+        if (request.isRunning()) {
+            // Avoid clearing parts of requests that may have completed (thumbnails) to avoid blinking
+            // in the UI, while still making sure that any in progress parts of requests are immediately
+            // stopped.
+            //暂停所有的请求
+            request.pause();
+            pendingRequests.add(request);
+        }
+    }
+}
+
+
+/** Starts any not yet completed or failed requests. */
+public void resumeRequests() {
+    isPaused = false;
+    for (Request request : Util.getSnapshot(requests)) {
+        // We don't need to check for cleared here. Any explicit clear by a user will remove the
+        // Request from the tracker, so the only way we'd find a cleared request here is if we cleared
+        // it. As a result it should be safe for us to resume cleared requests.
+        if (!request.isComplete() && !request.isRunning()) {
+            //重启所有的请求
+            request.begin();
+        }
+    }
+    pendingRequests.clear();
+}
+```
+
+
+
 
 ### 定制请求
 

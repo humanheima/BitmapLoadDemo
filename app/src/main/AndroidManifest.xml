@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.hm.bitmaploadexample">
+    package="com.hm.bitmaploadexample">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-            android:name=".App"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-
-        <!--android:windowSoftInputMode="adjustNothing",不动，输入框会被遮住-->
-        <!--android:windowSoftInputMode="adjustUnspecified",向上移动-->
-        <!--android:windowSoftInputMode="stateUnchanged",向上移动-->
-        <!--android:windowSoftInputMode="adjustResize",和场景一样-->
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity
-                android:name=".activity.BitmapHeightProblemTestActivity"
-                android:screenOrientation="portrait"
-                android:exported="false" />
-
+            android:name=".activity.MatrixActivity"
+            android:exported="false" />
+        <!-- android:windowSoftInputMode="adjustNothing",不动，输入框会被遮住 -->
+        <!-- android:windowSoftInputMode="adjustUnspecified",向上移动 -->
+        <!-- android:windowSoftInputMode="stateUnchanged",向上移动 -->
+        <!-- android:windowSoftInputMode="adjustResize",和场景一样 -->
         <activity
-                android:name=".activity.ImageSizeForMemoryTestActivity"
-                android:exported="false" />
+            android:name=".activity.BitmapHeightProblemTestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.MainActivity"
-                android:screenOrientation="portrait"
-                android:exported="true">
+            android:name=".activity.ImageSizeForMemoryTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,23 +38,24 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".activity.TestActivity"
-                android:screenOrientation="portrait"
-                android:exported="false" />
+            android:name=".activity.TestActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.GridViewActivity"
-                android:screenOrientation="portrait"
-                android:exported="false" />
+            android:name=".activity.GridViewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.GlideActivity"
-                android:screenOrientation="portrait"
-                android:exported="false" />
+            android:name=".activity.GlideActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.LoadLargeImageActivity" />
         <activity android:name=".activity.LargeImageViewActivity" />
         <activity android:name=".activity.sourcecode.GlideSourceCodeActivity" />
         <activity android:name=".activity.sourcecode.GlideRecyclerViewActivity" />
-        <activity android:name=".activity.SoftKeyboardActivity"
-                android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.SoftKeyboardActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

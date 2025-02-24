@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context=".activity.MatrixActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="原始图片" />
+
+    <ImageView
+        android:id="@+id/iv_original"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="matrix" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="变换后的图片" />
+
+    <ImageView
+        android:id="@+id/iv_transformed"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="matrix" />
+
+    <Button
+        android:id="@+id/btn_transform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="各种矩阵变换" />
+
+</LinearLayout>
