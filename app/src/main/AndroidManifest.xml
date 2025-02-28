@@ -14,9 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MatrixActivity"
+            android:name=".activity.TransformActivity"
             android:exported="false" />
-        <!-- android:windowSoftInputMode="adjustNothing",不动，输入框会被遮住 -->
+        <activity
+            android:name=".activity.MatrixActivity"
+            android:exported="false" /> <!-- android:windowSoftInputMode="adjustNothing",不动，输入框会被遮住 -->
         <!-- android:windowSoftInputMode="adjustUnspecified",向上移动 -->
         <!-- android:windowSoftInputMode="stateUnchanged",向上移动 -->
         <!-- android:windowSoftInputMode="adjustResize",和场景一样 -->
