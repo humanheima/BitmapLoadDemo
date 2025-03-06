@@ -209,7 +209,7 @@ private <Y extends Target<TranscodeType>> Y into(
       }
       return target;
     }
-    //注释1处，取消Glide可能为此target(最常见的ImageViewTarget)的所有未完成的加载，并释放可能已为目标加载的任何资源（例如{@link Bitmap}），以便可以重用它们。
+    //注释1处，取消Glide可能为此target(最常见的 ImageViewTarget )的所有未完成的加载，并释放可能已为目标加载的任何资源（例如{@link Bitmap}），以便可以重用它们。
     //注意：这里内部会清除Glide为Target设置的Tag。
     requestManager.clear(target);
     //注释2处，给Target设置了Tag

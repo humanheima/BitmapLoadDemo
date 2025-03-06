@@ -71,7 +71,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 //        options = new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher)
 //        .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        //sourceCodeTest();
+        sourceCodeTest();
         //glide1();
 //        glide2();
 //        glide3();
@@ -106,7 +106,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 
         });
 
-        useInBackgroundThread();
+        //useInBackgroundThread();
 
     }
 
