@@ -73,7 +73,8 @@ class GlideActivity : AppCompatActivity() {
     private fun glide1() {
         //从网络加载
         Glide.with(this) //.asGif()
-            .load(Images.imageUrls[1]) // .asGif()
+            .load(Images.imageUrls[1])
+            // .asGif()
             .apply(options)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.imageView1)
