@@ -15,14 +15,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.signature.ObjectKey;
 import com.hm.bitmaploadexample.R;
 import com.hm.bitmaploadexample.databinding.ActivityGlideSourceCodeBinding;
 import com.hm.bitmaploadexample.transform.BlurTransformation;
@@ -71,7 +76,7 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 //        options = new RequestOptions().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher)
 //        .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        sourceCodeTest();
+        //sourceCodeTest();
         //glide1();
 //        glide2();
 //        glide3();
@@ -90,10 +95,13 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
 //
 //        useGlideApp();
 
+        loadSameUrl();
+
         binding.btnTestHeightProblem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                sourceCodeTest();
+                //sourceCodeTest();
+                loadSameUrl();
             }
         });
 
@@ -134,20 +142,71 @@ public class GlideSourceCodeActivity extends AppCompatActivity {
      * 最简单的使用方式
      */
     private void sourceCodeTest() {
+        String imageUrl = Images.imageUrls[1];
         Glide.with(this)
-                .load(Images.imageUrls[1])
+                .load(imageUrl)
                 //.diskCacheStrategy(DiskCacheStrategy.ALL)
                 //.transform(new BlurTransformation(this, 15))
                 .into(binding.ivHeightProblem);
 
-        binding.ivHeightProblem.post(new Runnable() {
+//        binding.ivHeightProblem.post(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                Log.e(TAG, "run: " + binding.ivHeightProblem.getWidth() + " , " + binding.ivHeightProblem.getHeight());
+//            }
+//        });
 
-            @Override
-            public void run() {
-                Log.e(TAG, "run: " + binding.ivHeightProblem.getWidth() + " , " + binding.ivHeightProblem.getHeight());
-            }
-        });
+    }
 
+    /**
+     * 测试1. 加载相同的url，使用缓存
+     * 2. 服务端的内容发生了变化，怎么跳过缓存，加载到最新的url？
+     * <p>
+     * 方法1. 加 signature
+     * <p>
+     * 方法2. 加一个随机参数，比如时间戳参数
+     */
+    private void loadSameUrl() {
+        String imageUrl = Images.imageUrls[1];
+        //imageUrl += "?t=" + System.currentTimeMillis();
+        Log.d(TAG, "loadSameUrl: imageUrl = " + imageUrl);
+        Glide.with(this)
+                .load(imageUrl)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, @NonNull Target<Drawable> target, boolean isFirstResource) {
+                        Log.d("Glide", "加载失败");
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, @NonNull DataSource dataSource, boolean isFirstResource) {
+                        switch (dataSource) {
+                            case MEMORY_CACHE:
+                                Log.d(TAG, "图片从内存缓存加载");
+                                break;
+                            case DATA_DISK_CACHE:
+                                Log.d(TAG, "图片从原始的磁盘缓存加载");
+                                break;
+                            case RESOURCE_DISK_CACHE:
+                                Log.d(TAG, "图片从修改过的磁盘缓存加载");
+                                break;
+                            case REMOTE:
+                                Log.d(TAG, "图片从网络加载");
+                                break;
+                            case LOCAL:
+                                Log.d(TAG, "图片从本地加载");
+                                break;
+                            default:
+                                Log.d(TAG, "其他来源");
+                                break;
+                        }
+                        return false; // 返回 false 表示不拦截，继续正常加载
+                    }
+                })
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .into(binding.ivHeightProblem);
     }
 
     /**
