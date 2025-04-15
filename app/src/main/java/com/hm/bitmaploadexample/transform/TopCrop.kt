@@ -52,14 +52,24 @@ class TopCrop : BitmapTransformation() {
         val dx: Float
         val dy: Float
         val matrix = Matrix()
-        // height / width > inBitmap.height / inBitmap.width   时，裁掉左右内容
+        // 等价于 inBitmap.getWidth() / inBitmap.getHeight() > width / height ，即输入位图“更宽”。裁掉左右内容
         if (inBitmap.width * height > width * inBitmap.height) {
             // 裁掉左右内容
+            /**
+             * 以高为基准，先缩放，让 inBitmap 的高 = height。
+             * 缩放比例是：scale = (float) height / (float) inBitmap.getHeight(); scale，有可能大于0，有可能小于0。
+             * 无论 scale 是大于0还是小于0。inBitmap.width * scale 总是 > width
+             */
             scale = height.toFloat() / inBitmap.height.toFloat()
+            //这里dx是负的，向左移动。
             dx = (width - inBitmap.width * scale) * 0.5f
             dy = 0f
         } else {
             // 保留顶部内容裁掉底部内容
+            /**
+             * 输入位图更高。缩放，保证缩放后的 bitmap 的宽 = width
+             * 竖直方向上，dy = 0f，表示保留顶部内容裁掉底部内容
+             */
             scale = width.toFloat() / inBitmap.width.toFloat()
             dx = 0f
             dy = 0f
@@ -69,8 +79,9 @@ class TopCrop : BitmapTransformation() {
             "transform: width=$width height=$height bitmapWidth=${inBitmap.width}" +
                     " bitmapHeight=${inBitmap.height} scale=$scale dx=$dx dy=$dy"
         )
-
+        //先缩放
         matrix.setScale(scale, scale)
+        //再移动
         matrix.postTranslate(dx, dy)
         val result = pool[width, height, getNonNullConfig(inBitmap)]
         applyMatrix(inBitmap, result, matrix)
